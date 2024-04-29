@@ -12,7 +12,8 @@ public class HtmMakerAppApplication {
 	public class VersionController {
 		@GetMapping("/version")
 		public String getVersion() {
-			return "1.0";
+			System.out.println("Version 1.02");
+			return "1.044402";
 		}
 	}
 	public static void main(String[] args) {
