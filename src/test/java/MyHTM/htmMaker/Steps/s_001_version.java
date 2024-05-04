@@ -24,25 +24,27 @@ public class s_001_version {
     @Given("the server is running")
     public void theServerIsRunning() {
         // Assuming the server is auto-started by @SpringBootTest
+        System.out.println("Server is running");
     }
 
     @When("the client calls {string}")
     public void theClientCalls(String arg0) {
-        response = restTemplate.getForEntity("/http://localhost:8080/version", String.class);
-    }
-
-    @Then("the client receives status code of {int}")
-    public void theClientReceivesStatusCodeOf(int arg0) {
-        assertEquals(response.getBody(), appConfig.getVersion());
-    }
-
-    @And("the client receives server version {double}")
-    public void theClientReceivesServerVersion(int arg0, int arg1) {
-        assertEquals(arg1, response.getStatusCode().value());
+        System.out.println("Client calls " + arg0);
+        //send the get request to localhost:8080/version
+        restTemplate = new TestRestTemplate();
+        response = this.restTemplate.getForEntity("http://localhost:8080/version", String.class);
+        System.out.println("Response: " + response.getBody());
     }
 
     @Then("the client receives server version {string}")
     public void theClientReceivesServerVersion(String arg0) {
-        assertEquals(appConfig.getVersion(), response.getStatusCode().value());
+        System.out.println("Client receives server version " + arg0);
+        assertEquals(response.getBody(), appConfig.getVersion());
+    }
+
+    @And("the client receives status code of {int}")
+    public void theClientReceivesStatusCodeOf(int arg0) {
+        System.out.println("Client receives status code of " + arg0);
+        assertEquals(arg0, response.getStatusCode().value());
     }
 }
