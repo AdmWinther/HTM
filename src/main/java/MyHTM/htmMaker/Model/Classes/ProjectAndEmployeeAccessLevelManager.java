@@ -5,34 +5,38 @@ import java.util.ArrayList;
 public class ProjectAndEmployeeAccessLevelManager {
     private ArrayList<Project> projects;
     private User superUser;
-    private ArrayList<Pair<User, EmployeeStatus>> employees;
+    private ArrayList<User> employees;
+    private ArrayList<UserProjectAccess> userProjectAccesses;
 
     public ProjectAndEmployeeAccessLevelManager(User superUser) {
         projects = new ArrayList<>();
         employees = new ArrayList<>();
         this.superUser = superUser;
-        employees.add(new Pair<>(superUser, EmployeeStatus.Active));
+        employees.add(superUser);
+        userProjectAccesses = new ArrayList<>();
     }
     public void addEmployee(User user) {
         // add an employee to the organization employees list
-        Pair<User, EmployeeStatus> employee = new Pair<>(user, EmployeeStatus.Active);
-        for(Pair<User, EmployeeStatus> pair: employees) {
-            if(pair.first().equals(user)){
-                if(pair.second().equals(EmployeeStatus.Inactive)){
-                    throw new IllegalArgumentException("User already in organization but inactive");
-                } else {
-                    throw new IllegalArgumentException("User already in organization and active");
-                }
+        if(user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+        for(User oneUser : employees) {
+            if(oneUser.equals(user)){
+                throw new IllegalArgumentException("User already in organization");
             }
         }
-        employees.add(employee);
+        employees.add(user);
     }
 
     public void setSuperUser(User superUser) {
-        //todo: Make sure the super user is not already in the employees list
-        //todo: Make sure the super user is not null or empty
+        // Make sure the super user is not null or empty
+        if(superUser == null) {
+            throw new IllegalArgumentException("Super user cannot be null");
+        }
         this.superUser = superUser;
         this.addEmployee(superUser);
+        //todo; Make sure superuser is not already in the organization employees list
+        //todo; in the UserProjectAccess, add the super user to the list of users and give him/her the highest access level.
     }
 
     public User getSuperUser() {
