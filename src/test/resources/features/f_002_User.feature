@@ -11,4 +11,7 @@ Feature: User Class
       | "John"  | "Doe"       | "john"          | "User email address is not correct"  |
 
   Scenario: making a new user with correct data
-    When attempt to make a new user with name "John" lastName "Doe" and emailAddress "John@Doe.com" must be successful
+    Given attempt to make a new user with name "John" lastName "Doe" and emailAddress "John@Doe.com"
+    When the user is created
+    Then the user name is "John"
+    And the user has an ID

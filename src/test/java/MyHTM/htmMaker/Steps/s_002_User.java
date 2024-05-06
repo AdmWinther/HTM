@@ -6,10 +6,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class s_002_User {
+    private User user;
     @When("attempt to make a new user with empty name must throw an error {string}")
     public void attemptToMakeANewUserWithEmptyNameMustThrowAnError(String arg0) {
         try {
@@ -64,12 +64,28 @@ public class s_002_User {
         }
     }
 
-    @When("attempt to make a new user with name {string} lastName {string} and emailAddress {string} must be successful")
+    @When("attempt to make a new user with name {string} lastName {string} and emailAddress {string}")
     public void attemptToMakeANewUserWithNameLastNameAndEmailAddressMustBeSuccessful(String name, String lastName, String emailAddress) {
         try {
-            User user = new User(name, lastName, emailAddress);
+            this.user = new User(name, lastName, emailAddress);
         } catch (IllegalArgumentException e) {
             fail();
         }
+    }
+
+    @When("the user is created")
+    public void theUserIsCreated() {
+        assert this.user != null;
+    }
+
+    @Then("the user name is {string}")
+    public void theUserNameIs(String userName) {
+        assertEquals(this.user.getName(), userName);
+    }
+
+    @And("the user has an ID")
+    public void theUserHasAnID() {
+        assert this.user.getId() != null;
+        assertFalse(this.user.getId().isEmpty());
     }
 }

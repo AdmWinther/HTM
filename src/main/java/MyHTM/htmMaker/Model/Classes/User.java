@@ -1,7 +1,9 @@
 package MyHTM.htmMaker.Model.Classes;
 
+import java.util.Objects;
+
 public class User extends Activeable{
-    private int id;
+    private final String id;
     private final String name;
     private final String lastName;
     private final Email email;
@@ -10,6 +12,8 @@ public class User extends Activeable{
 
     public User(String name, String lastName, String emailAddress) {
         try {
+            ID id = new ID();
+            this.id = id.getId();
             isValidNewUser(name, lastName, emailAddress);
             this.name = name;
             this.lastName = lastName;
@@ -41,8 +45,8 @@ public class User extends Activeable{
         return name;
     }
 
-    public Email getEmail() {
-        return email;
+    public String getEmail() {
+        return email.getEmail();
     }
 
     public String getPassword() {
@@ -51,5 +55,20 @@ public class User extends Activeable{
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public boolean equals(User user) {
+        if(Objects.equals(this.name, user.getName())){
+            if(Objects.equals(this.lastName, user.getLastName())){
+                if(Objects.equals(this.getEmail(), user.getEmail())){
+                    return this.id == user.getId();
+                }
+            }
+        }
+        return false;
     }
 }

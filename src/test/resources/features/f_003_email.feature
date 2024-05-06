@@ -34,6 +34,7 @@ Feature: Email
     Given the server is running
     When "a@abc.de" is passed to Email constructor
     Then the method Email must return a not null object Email
+    And the Email ID must not be null
 
   Scenario: make a new Email, if the constructor is called with an invalid email address, a null object Email must be created
     Given the server is running

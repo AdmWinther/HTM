@@ -7,9 +7,11 @@ public class ProjectAndEmployeeAccessLevelManager {
     private User superUser;
     private ArrayList<Pair<User, EmployeeStatus>> employees;
 
-    public ProjectAndEmployeeAccessLevelManager() {
+    public ProjectAndEmployeeAccessLevelManager(User superUser) {
         projects = new ArrayList<>();
         employees = new ArrayList<>();
+        this.superUser = superUser;
+        employees.add(new Pair<>(superUser, EmployeeStatus.Active));
     }
     public void addEmployee(User user) {
         // add an employee to the organization employees list
@@ -35,5 +37,25 @@ public class ProjectAndEmployeeAccessLevelManager {
 
     public User getSuperUser() {
         return superUser;
+    }
+
+    public void giveAccessToProject(Project project, AccessLevel accessLevel) {
+        // add a user with AccessLevel to a project to the organization projects list
+    }
+
+    public void removeAccessToProject(User user, Project project) {
+        // take access from a user
+    }
+
+    public void giveAccessToAll(User user, AccessLevel accessLevel) {
+        // remove an employee from the organization employees list
+    }
+
+    public void removeAllAccess(User user) {
+        // remove an employee from the organization employees list
+    }
+
+    public void setAccessToProject(User user, Project project, AccessLevel accessLevel) {
+        // change the access level of a user to a project
     }
 }

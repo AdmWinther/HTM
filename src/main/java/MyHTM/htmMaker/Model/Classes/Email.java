@@ -1,6 +1,7 @@
 package MyHTM.htmMaker.Model.Classes;
 
 public class Email {
+    private final String id;
     private String emailID;
     private String domain;
     private String extension;
@@ -11,6 +12,8 @@ public class Email {
             this.emailID = email.substring(0, atIndex);
             this.domain = email.substring(atIndex + 1, dotIndex);
             this.extension = email.substring(dotIndex + 1);
+            ID id = new ID();
+            this.id = id.getId();
         } else {
             throw new IllegalArgumentException("Invalid email address");
         }
@@ -42,5 +45,13 @@ public class Email {
 
     public String getExtension() {
         return extension;
+    }
+
+    public String getEmail() {
+        return emailID + "@" + domain + "." + extension;
+    }
+
+    public String getId() {
+        return id;
     }
 }

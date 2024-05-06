@@ -14,6 +14,8 @@ Feature: Organization Class
 
   Scenario Outline: making a new organization successfully with correct data
     When attempt to make a new organization with correct name <name> firstName <firstName> lastName <lastName> and emailAddress <emailAddress> must succeed
+    Then the organization must have the correct name <name> firstName <firstName> lastName <lastName> and emailAddress <emailAddress>
+    And the organization must have an id
     Examples:
       | name          | firstName   | lastName  | emailAddress              |
       | "Abc Company" | "John"      | "Doe"     | "johnDoe@abcCompany.com"  |

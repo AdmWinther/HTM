@@ -1,7 +1,7 @@
 package MyHTM.htmMaker.Model.Classes;
 
 public class Organization extends Activeable {
-    private int id;
+    private final String id;
     private String name;
     private ProjectAndEmployeeAccessLevelManager projectEmployeeAccessLevelManager;
 
@@ -10,9 +10,9 @@ public class Organization extends Activeable {
             isValidNewCompanyName(name);
             this.name = name;
             this.activate();
-            this.projectEmployeeAccessLevelManager = new ProjectAndEmployeeAccessLevelManager();
-            this.projectEmployeeAccessLevelManager.setSuperUser(superUser);
-            this.projectEmployeeAccessLevelManager.addEmployee(superUser);
+            this.projectEmployeeAccessLevelManager = new ProjectAndEmployeeAccessLevelManager(superUser);
+//            this.projectEmployeeAccessLevelManager.setSuperUser(superUser);
+//            this.projectEmployeeAccessLevelManager.addEmployee(superUser);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -20,6 +20,8 @@ public class Organization extends Activeable {
 
     public Organization(String name, User superUser) {
         try {
+            ID id = new ID();
+            this.id = id.getId();
             if(superUser == null) throw new IllegalArgumentException("User cannot be null");
             assignArguments(name, superUser);
         } catch (IllegalArgumentException e) {
@@ -29,6 +31,8 @@ public class Organization extends Activeable {
 
     public Organization(String name, String superUserName, String superUserLastName, String superUserEmail) {
         try {
+            ID id = new ID();
+            this.id = id.getId();
             User superUser = new User(superUserName, superUserLastName, superUserEmail);
             this.assignArguments(name, superUser);
         } catch (IllegalArgumentException e) {
@@ -55,5 +59,14 @@ public class Organization extends Activeable {
 
     public void changeSuperUser(User newSuperUser) {
         this.projectEmployeeAccessLevelManager.setSuperUser(newSuperUser);
+    }
+
+    public void setName(String newName) {
+        this.isValidNewCompanyName(newName);
+        this.name = newName;
+    }
+
+    public String getId() {
+        return id;
     }
 }

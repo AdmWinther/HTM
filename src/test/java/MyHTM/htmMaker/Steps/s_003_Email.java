@@ -1,6 +1,7 @@
 package MyHTM.htmMaker.Steps;
 
 import MyHTM.htmMaker.Model.Classes.User;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import MyHTM.htmMaker.Model.Classes.Email;
@@ -44,5 +45,11 @@ public class s_003_Email {
         } catch (IllegalArgumentException e) {
             assertEquals(e.getMessage(), arg0);
         }
+    }
+
+    @And("the Email ID must not be null")
+    public void theEmailIDMustNotBeNull() {
+        assertNotNull(this.email.getId());
+        assertNotEquals(this.email.getId(), "");
     }
 }

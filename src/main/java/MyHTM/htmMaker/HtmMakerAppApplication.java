@@ -20,7 +20,7 @@ public class HtmMakerAppApplication {
 
         @GetMapping("/version")
 		public String getVersion() {
-			System.out.println("Version 1.02");
+			System.out.println("Version 1.0x");
 
 			return this.appConfig.getVersion();
 		}
