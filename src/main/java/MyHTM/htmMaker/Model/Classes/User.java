@@ -19,21 +19,21 @@ public class User extends Activeable{
         }
     }
 
-    public static void isValidNewUser(String name, String lastName, String emailaddress) throws IllegalArgumentException{
+    private static void isValidNewUser(String name, String lastName, String emailaddress) throws IllegalArgumentException{
         if(name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name is required");
+            throw new IllegalArgumentException("User name is required");
         }
 
         if(lastName == null || lastName.isEmpty()) {
-            throw new IllegalArgumentException("Lastname is required");
+            throw new IllegalArgumentException("User lastname is required");
         }
 
         if(emailaddress == null || emailaddress.isEmpty()) {
-            throw new IllegalArgumentException("Email address is required");
+            throw new IllegalArgumentException("User email address is required");
         }
 
         if(!Email.isEmail(emailaddress)) {
-            throw new IllegalArgumentException("Email address is not correct");
+            throw new IllegalArgumentException("User email address is not correct");
         }
     }
 
