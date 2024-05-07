@@ -5,6 +5,7 @@ public class Email {
     private String emailID;
     private String domain;
     private String extension;
+    private String address;
     public Email(String email) {
         if(isEmail(email)) {
             int atIndex = email.indexOf('@');
@@ -12,6 +13,7 @@ public class Email {
             this.emailID = email.substring(0, atIndex);
             this.domain = email.substring(atIndex + 1, dotIndex);
             this.extension = email.substring(dotIndex + 1);
+            this.address = STR."\{this.emailID}@\{this.domain}.\{this.extension}";
             ID id = new ID();
             this.id = id.getId();
         } else {
@@ -53,5 +55,9 @@ public class Email {
 
     public String getId() {
         return id;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

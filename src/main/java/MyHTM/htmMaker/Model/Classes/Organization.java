@@ -1,18 +1,19 @@
 package MyHTM.htmMaker.Model.Classes;
 
+import java.util.ArrayList;
+
 public class Organization extends Activeable {
     private final String id;
     private String name;
-    private ProjectAndEmployeeAccessLevelManager projectEmployeeAccessLevelManager;
+    private ArrayList<String> superUsersIds;
 
     private void assignArguments(String name, User superUser) {
         try{
             isValidNewCompanyName(name);
             this.name = name;
             this.activate();
-            this.projectEmployeeAccessLevelManager = new ProjectAndEmployeeAccessLevelManager(superUser);
-//            this.projectEmployeeAccessLevelManager.setSuperUser(superUser);
-//            this.projectEmployeeAccessLevelManager.addEmployee(superUser);
+            this.superUsersIds = new ArrayList<String>();
+            this.superUsersIds.add(superUser.getId());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -53,12 +54,18 @@ public class Organization extends Activeable {
         return name;
     }
 
-    public User getSuperUser() {
-        return this.projectEmployeeAccessLevelManager.getSuperUser();
+    public ArrayList<String> getSuperUsersIds() {
+        return superUsersIds;
     }
 
-    public void changeSuperUser(User newSuperUser) {
-        this.projectEmployeeAccessLevelManager.setSuperUser(newSuperUser);
+    public void addSuperUser(User superUser) {
+        this.superUsersIds.add(superUser.getId());
+    }
+
+    public void removeSuperUser(User superUser) {
+        if(superUser == null) throw new IllegalArgumentException("User cannot be null");
+        if(!this.superUsersIds.contains(superUser.getId())) throw new IllegalArgumentException("User not in organization");
+        this.superUsersIds.remove(superUser.getId());
     }
 
     public void setName(String newName) {
@@ -68,5 +75,9 @@ public class Organization extends Activeable {
 
     public String getId() {
         return id;
+    }
+
+    public boolean isSuperUser(User user) {
+        return this.superUsersIds.contains(user.getId());
     }
 }

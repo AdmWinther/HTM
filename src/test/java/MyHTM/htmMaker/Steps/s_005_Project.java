@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class s_005_Project {
     private Project project;
     private User user;
+    private User secondUser;
     @When("attempt to make a new Project with an empty name must throw an error")
     public void attemptToMakeANewProjectWithoutNameMustThrowAnError() {
         try {
@@ -45,20 +46,5 @@ public class s_005_Project {
     @Given("a Project with a ProjectManager is made")
     public void aProjectWithAProjectManagerIsMade() {
         this.project = new Project("MyProject", new User("John", "Doe", "john@doe.com"));
-    }
-
-    @When("attempt to change the ProjectManager of the Project")
-    public void attemptToChangeTheProjectManagerOfTheProject() {
-        try {
-            this.user = new User("Robert", "Thomson", "robert@thom.com");
-            this.project.setProjectManager(this.user);
-        } catch (IllegalArgumentException e) {
-            fail();
-        }
-    }
-
-    @Then("the ProjectManager of the Project must be changed")
-    public void theProjectManagerOfTheProjectMustBeChanged() {
-        assertEquals(this.project.getProjectManager(), user);
     }
 }

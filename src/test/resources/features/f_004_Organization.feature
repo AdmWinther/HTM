@@ -21,5 +21,15 @@ Feature: Organization Class
       | "Abc Company" | "John"      | "Doe"     | "johnDoe@abcCompany.com"  |
       | "Abc Company" | "Jacob"     | "Sørensen"| "johnDoe@abcCompany.com"  |
 
+  Scenario Outline: making a new organization successfully with a few SuperUsers
+    Given a new organization with correct name <name> firstName <firstName> lastName <lastName> and emailAddress <emailAddress>
+    When adding a few SuperUsers with correct firstName <secondFirstName> lastName <SecondlastName> and emailAddress <secondEmailAddress>
+    Then the organization must have two SuperUsers
+    And the superUsers ID must be equal to the user ID of User and secondUser.
+    Examples:
+      | name          | firstName   | lastName  | emailAddress              | secondFirstName | SecondlastName | secondEmailAddress         |
+      | "Abc Company" | "John"      | "Doe"     | "johnDoe@abcCompany.com"  | "Jacob"         | "Sorensen"    | "JacobSo@abcCompany.com"   |
+      | "Abc Company" | "Jack"      | "Nick"     | "jackNi@abcCompany.com"  | "Roberto"         | "Carlos"    | "RobeCa@abcCompany.com"   |
+
     Scenario: making a new organization with a null User must throw an error
       When attempt to make a new organization with correct name <name> but a null User must throw an error

@@ -5,8 +5,7 @@ import java.util.Base64;
 
 public class ID {
     private static int idCounter = 1000;
-
-    private String id;
+    private final String id;
 
     public ID() {
         //generate the hashcode of idCounter+1

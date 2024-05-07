@@ -1,13 +1,13 @@
 package MyHTM.htmMaker.Model.Classes;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Project extends Activeable{
     private final String id;
     private String name;
-    private User projectManager;
-//    private Set<Pair<User, AccessLevel>> projectTeam;
+    private ArrayList<String> projectManagersIds;
 
     public Project(String name, User projectManager) {
         ID id = new ID();
@@ -34,10 +34,8 @@ public class Project extends Activeable{
         try{
             isValidNewProjectName(name);
             this.name = name;
-            this.projectManager = projectManager;
-            //todo fix it.
-//            this.projectTeam = new HashSet<>();
-            this.addUser(projectManager, AccessLevel.Editor);
+            this.projectManagersIds = new ArrayList<>();
+            this.projectManagersIds.add(projectManager.getId());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
@@ -50,26 +48,20 @@ public class Project extends Activeable{
         }
     }
 
-    public void addUser(User user, AccessLevel role) {
-        // add a user to the project
-        Pair<User, AccessLevel> teamMember = new Pair<>(user, role);
-        //Todo fix it.
-//        if(projectTeam.contains(teamMember)) throw new IllegalArgumentException("User already in project");
-//        projectTeam.add(teamMember);
+    public void addProjectManager(User user) {
+        // add a SuperUser to the project
+        if(user == null) throw new IllegalArgumentException("User cannot be null");
+        if(projectManagersIds.contains(user.getId())) throw new IllegalArgumentException("User is already a project manager");
+        projectManagersIds.add(user.getId());
     }
 
-    public void removeUser(User user) {
+    public void removeProjectManager(User user) {
         if(user == null) throw new IllegalArgumentException("User cannot be null");
+        if(!projectManagersIds.contains(user.getId())) throw new IllegalArgumentException("User is not a project manager");
+        //check if the user is the only project manager
+        if(projectManagersIds.size() == 1) throw new IllegalArgumentException("Cannot remove the only project manager from the project");
         // remove a user from the project
-        if(user.equals(projectManager)) throw new IllegalArgumentException("Cannot remove project manager from the project team. Please assign a new project manager first.");
-        //Todo fix it.
-//        for(Pair<User, AccessLevel> teamMember : projectTeam) {
-//            if(teamMember.getFirst().equals(user)) {
-//                projectTeam.remove(teamMember);
-//                return;
-//            }
-//        }
-        throw new IllegalArgumentException("User not in project");
+        projectManagersIds.remove(user.getId());
     }
 
     public String getName() {
@@ -81,16 +73,8 @@ public class Project extends Activeable{
         this.name = name;
     }
 
-    public User getProjectManager() {
-        return projectManager;
-    }
-
-    public void setProjectManager(User newProjectManager) {
-        if(newProjectManager == null) throw new IllegalArgumentException("Project manager is required");
-        //the old project manager is still in the project team and have Editor AccessLevel.
-        projectManager = newProjectManager;
-        //Todo fix it.
-//        projectTeam.add(new Pair<>(newProjectManager, AccessLevel.Editor));
+    public ArrayList<String> getProjectManagersIds() {
+        return projectManagersIds;
     }
 
     public String getId() {
