@@ -1,8 +1,11 @@
-package MyHTM.htmMaker.Model.Classes;
+package MyHTM.htmMaker.Model.Classes.Identity;
+
+import MyHTM.htmMaker.Model.Classes.Activeable;
+import MyHTM.htmMaker.Model.Classes.ID;
 
 import java.util.Objects;
 
-public class User extends Activeable{
+public class User extends Activeable {
     private final String id;
     private final String name;
     private final String lastName;

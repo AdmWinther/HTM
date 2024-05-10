@@ -1,4 +1,6 @@
-package MyHTM.htmMaker.Model.Classes;
+package MyHTM.htmMaker.Model.Classes.Identity;
+
+import MyHTM.htmMaker.Model.Classes.ID;
 
 public class Email {
     private final String id;

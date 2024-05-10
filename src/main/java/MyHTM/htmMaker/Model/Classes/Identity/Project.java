@@ -1,10 +1,11 @@
-package MyHTM.htmMaker.Model.Classes;
+package MyHTM.htmMaker.Model.Classes.Identity;
+
+import MyHTM.htmMaker.Model.Classes.Activeable;
+import MyHTM.htmMaker.Model.Classes.ID;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-public class Project extends Activeable{
+public class Project extends Activeable {
     private final String id;
     private String name;
     private ArrayList<String> projectManagersIds;
