@@ -1,10 +1,18 @@
 package MyHTM.htmMaker.Model.Identity;
 
 import MyHTM.htmMaker.Model.Util.Util.ID;
+import jakarta.persistence.*;
 
 import static java.lang.StringTemplate.STR;
 
+@Entity
+@Table
 public class Email {
+    @Id
+    @SequenceGenerator(
+            name = "email_sequence", sequenceName = "email_sequence", allocationSize = 1)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE, generator = "email_sequence")
     private final String id;
     private final String address;
     public Email(String email) {
@@ -19,6 +27,11 @@ public class Email {
         } else {
             throw new IllegalArgumentException("Invalid email address");
         }
+    }
+
+    public Email() {
+        this.id = new ID().getId();
+        this.address = "";
     }
 
     //todo; This method must changed to private but we cannot do it now because the method is used in User class.

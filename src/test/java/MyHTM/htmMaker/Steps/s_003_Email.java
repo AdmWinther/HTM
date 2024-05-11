@@ -4,10 +4,12 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import MyHTM.htmMaker.Model.Identity.Email;
+import jakarta.persistence.*;
 
 import static org.junit.Assert.*;
 
 public class s_003_Email {
+
     private boolean isEmail;
     private Email email;
 
