@@ -3,7 +3,7 @@ package MyHTM.htmMaker.Steps;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import MyHTM.htmMaker.Model.Classes.Identity.Email;
+import MyHTM.htmMaker.Model.Identity.Email;
 
 import static org.junit.Assert.*;
 

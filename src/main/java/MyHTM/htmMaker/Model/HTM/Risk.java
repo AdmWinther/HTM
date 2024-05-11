@@ -1,6 +1,9 @@
-package MyHTM.htmMaker.Model.Classes.HTM;
+package MyHTM.htmMaker.Model.HTM;
 
-import MyHTM.htmMaker.Model.Classes.ID;
+import MyHTM.htmMaker.Model.Util.Util.ID;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class Risk {
     private final String id;
@@ -12,7 +15,7 @@ public class Risk {
     private ProbOfOccurrence probOfOccurrenceBefore;
     private RiskValue riskValueBefore; //if harmBefore or probOfOccurrenceBefore is changed, riskValueBefore should be updated
     private String rcmRationale;
-    private String[] rcmIds;
+    private ArrayList<String> rcmIds;
     private Harm harmAfter;  //Severity is identified based on Harm
     private ProbOfOccurrence probOfOccurrenceAfter;
     private RiskValue riskValueAfter;   //if harmAfter or probOfOccurrenceAfter is changed, riskValueAfter should be updated
@@ -80,12 +83,8 @@ public class Risk {
         this.rcmRationale = rcmRationale;
     }
 
-    public String[] getRcmIds() {
+    public ArrayList<String> getRcmIds() {
         return rcmIds;
-    }
-
-    public void setRcmIds(String[] rcmIds) {
-        this.rcmIds = rcmIds;
     }
 
     public Harm getHarmAfter() {
@@ -118,5 +117,14 @@ public class Risk {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public void addRCM(Rcm rcm) {
+        //add rcm to the risk
+        Objects.requireNonNull(rcm, "RCM cannot be null");
+        if(rcmIds == null) {
+            rcmIds = new ArrayList<String>();
+        }
+        rcmIds.add(rcm.getId());
     }
 }

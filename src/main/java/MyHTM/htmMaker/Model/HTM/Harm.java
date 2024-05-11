@@ -1,6 +1,6 @@
-package MyHTM.htmMaker.Model.Classes.HTM;
+package MyHTM.htmMaker.Model.HTM;
 
-import MyHTM.htmMaker.Model.Classes.ID;
+import MyHTM.htmMaker.Model.Util.Util.ID;
 
 public class Harm {
     private final String harmId;

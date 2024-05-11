@@ -1,7 +1,7 @@
-package MyHTM.htmMaker.Model.Classes.Identity;
+package MyHTM.htmMaker.Model.Identity;
 
-import MyHTM.htmMaker.Model.Classes.Activeable;
-import MyHTM.htmMaker.Model.Classes.ID;
+import MyHTM.htmMaker.Model.Util.Util.Activeable;
+import MyHTM.htmMaker.Model.Util.Util.ID;
 
 import java.util.ArrayList;
 

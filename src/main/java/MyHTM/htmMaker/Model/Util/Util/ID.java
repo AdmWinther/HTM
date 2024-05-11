@@ -1,4 +1,4 @@
-package MyHTM.htmMaker.Model.Classes;
+package MyHTM.htmMaker.Model.Util.Util;
 
 import java.security.SecureRandom;
 import java.util.Base64;

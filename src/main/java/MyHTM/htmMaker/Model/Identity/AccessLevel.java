@@ -1,4 +1,4 @@
-package MyHTM.htmMaker.Model.Classes.Identity;
+package MyHTM.htmMaker.Model.Identity;
 
 public enum AccessLevel {
     Editor,

@@ -1,8 +1,8 @@
-package MyHTM.htmMaker.Model.Classes.HTM;
+package MyHTM.htmMaker.Model.HTM;
 
-import MyHTM.htmMaker.Model.Classes.ID;
+import MyHTM.htmMaker.Model.Util.Util.ID;
 
-public class RCM {
+public class Rcm {
     //This class is presenting the Risk Control Measures.
     private final String id;
     private final String projectId;
@@ -12,7 +12,7 @@ public class RCM {
     private String implementation;
     private String verification;
 
-    public RCM(String projectId, String rcmNumber, RcmTypeEnum rcmType, String description, String implementation, String verification) {
+    public Rcm(String projectId, String rcmNumber, RcmTypeEnum rcmType, String description, String implementation, String verification) {
         this.id = new ID().getId();
         this.projectId = projectId;
         this.RcmNumber = rcmNumber;

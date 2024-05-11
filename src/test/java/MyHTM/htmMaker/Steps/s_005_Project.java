@@ -1,7 +1,7 @@
 package MyHTM.htmMaker.Steps;
 
-import MyHTM.htmMaker.Model.Classes.Identity.Project;
-import MyHTM.htmMaker.Model.Classes.Identity.User;
+import MyHTM.htmMaker.Model.Identity.Project;
+import MyHTM.htmMaker.Model.Identity.User;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

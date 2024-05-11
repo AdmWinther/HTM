@@ -1,5 +1,6 @@
 package MyHTM.htmMaker.Steps;
 
+import MyHTM.htmMaker.HtmMakerAppApplication;
 import MyHTM.htmMaker.Utils.AppConfig;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -21,7 +22,7 @@ public class s_001_version {
 
     @Given("the server is running")
     public void theServerIsRunning() {
-        // Assuming the server is auto-started by @SpringBootTest
+        HtmMakerAppApplication.main(new String[]{});
         System.out.println("Server is running");
     }
 

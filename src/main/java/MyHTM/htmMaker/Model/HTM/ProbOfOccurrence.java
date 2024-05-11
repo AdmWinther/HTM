@@ -1,4 +1,4 @@
-package MyHTM.htmMaker.Model.Classes.HTM;
+package MyHTM.htmMaker.Model.HTM;
 //In the future, the number of probability levels can be defined by the user
 //todo: allow customization of probability levels
 public enum ProbOfOccurrence {

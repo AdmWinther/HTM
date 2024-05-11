@@ -1,4 +1,4 @@
-package MyHTM.htmMaker.Model.Classes.HTM;
+package MyHTM.htmMaker.Model.HTM;
 
 public enum RcmTypeEnum {
     InherentlySafeDesign,

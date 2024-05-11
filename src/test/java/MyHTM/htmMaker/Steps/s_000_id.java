@@ -1,8 +1,7 @@
 package MyHTM.htmMaker.Steps;
 
-import MyHTM.htmMaker.Model.Classes.ID;
+import MyHTM.htmMaker.Model.Util.Util.ID;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

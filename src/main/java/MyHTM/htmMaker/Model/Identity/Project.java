@@ -1,13 +1,14 @@
-package MyHTM.htmMaker.Model.Classes.Identity;
+package MyHTM.htmMaker.Model.Identity;
 
-import MyHTM.htmMaker.Model.Classes.Activeable;
-import MyHTM.htmMaker.Model.Classes.ID;
+import MyHTM.htmMaker.Model.Util.Util.Activeable;
+import MyHTM.htmMaker.Model.Util.Util.ID;
 
 import java.util.ArrayList;
 
 public class Project extends Activeable {
     private final String id;
     private String name;
+    //todo: in the future, each project can have multiple products
     private ArrayList<String> projectManagersIds;
 
     public Project(String name, User projectManager) {

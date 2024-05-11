@@ -11,20 +11,6 @@ import static java.lang.System.getProperty;
 @SpringBootApplication
 public class HtmMakerAppApplication {
 
-	@RestController
-	public class VersionController {
-		private final AppConfig appConfig;
-        public VersionController(AppConfig appConfig) {
-            this.appConfig = appConfig;
-        }
-
-        @GetMapping("/version")
-		public String getVersion() {
-			System.out.println("Version 1.0x");
-
-			return this.appConfig.getVersion();
-		}
-	}
 	public static void main(String[] args) {
 		SpringApplication.run(HtmMakerAppApplication.class, args);
 	}

@@ -1,28 +1,27 @@
-package MyHTM.htmMaker.Model.Classes.Identity;
+package MyHTM.htmMaker.Model.Identity;
 
-import MyHTM.htmMaker.Model.Classes.ID;
+import MyHTM.htmMaker.Model.Util.Util.ID;
+
+import static java.lang.StringTemplate.STR;
 
 public class Email {
     private final String id;
-    private String emailID;
-    private String domain;
-    private String extension;
-    private String address;
+    private final String address;
     public Email(String email) {
         if(isEmail(email)) {
+            this.id = new ID().getId();
             int atIndex = email.indexOf('@');
             int dotIndex = email.lastIndexOf('.');
-            this.emailID = email.substring(0, atIndex);
-            this.domain = email.substring(atIndex + 1, dotIndex);
-            this.extension = email.substring(dotIndex + 1);
-            this.address = STR."\{this.emailID}@\{this.domain}.\{this.extension}";
-            ID id = new ID();
-            this.id = id.getId();
+            String emailID = email.substring(0, atIndex);
+            String domain = email.substring(atIndex + 1, dotIndex);
+            String extension = email.substring(dotIndex + 1);
+            this.address = STR."\{emailID}@\{domain}.\{extension}";
         } else {
             throw new IllegalArgumentException("Invalid email address");
         }
     }
 
+    //todo; This method must changed to private but we cannot do it now because the method is used in User class.
     public static boolean isEmail(String email) {
         int atIndex = email.indexOf('@');
         int dotIndex = email.lastIndexOf('.');
@@ -38,23 +37,6 @@ public class Email {
         }
         return false;
     }
-
-    public String getEmailID() {
-        return emailID;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public String getExtension() {
-        return extension;
-    }
-
-    public String getEmail() {
-        return emailID + "@" + domain + "." + extension;
-    }
-
     public String getId() {
         return id;
     }

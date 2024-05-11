@@ -1,4 +1,4 @@
-package MyHTM.htmMaker.Model.Classes;
+package MyHTM.htmMaker.Model.Util.Util;
 
 public abstract class Activeable {
     private boolean isActive;

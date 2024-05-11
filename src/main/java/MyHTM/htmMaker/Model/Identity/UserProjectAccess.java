@@ -1,6 +1,4 @@
-package MyHTM.htmMaker.Model.Classes.Identity;
-
-import MyHTM.htmMaker.Model.Classes.Identity.AccessLevel;
+package MyHTM.htmMaker.Model.Identity;
 
 public class UserProjectAccess {
     String userId;
