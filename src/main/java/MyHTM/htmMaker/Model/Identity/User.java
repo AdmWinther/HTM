@@ -2,6 +2,7 @@ package MyHTM.htmMaker.Model.Identity;
 
 import MyHTM.htmMaker.Model.Util.Util.Activeable;
 import MyHTM.htmMaker.Model.Util.Util.ID;
+import jakarta.persistence.Entity;
 
 import java.util.Objects;
 

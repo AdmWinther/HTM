@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserService {
     public User generateRandomUser() {
-        return new User("Christian", "Perez", "ChrisPrz@gmail.com");
+        return new User("Christian"+Math.round( Math.random()*10e2), "Perez", "ChrisPrz"+Math.round(Math.random()*10e2)+"@gmail.com");
     }
 }

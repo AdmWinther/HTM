@@ -9,21 +9,15 @@ import static java.lang.StringTemplate.STR;
 @Table
 public class Email {
     @Id
-    @SequenceGenerator(
-            name = "email_sequence", sequenceName = "email_sequence", allocationSize = 1)
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE, generator = "email_sequence")
     private final String id;
+
     private final String address;
+
+    //Constructor
     public Email(String email) {
         if(isEmail(email)) {
             this.id = new ID().getId();
-            int atIndex = email.indexOf('@');
-            int dotIndex = email.lastIndexOf('.');
-            String emailID = email.substring(0, atIndex);
-            String domain = email.substring(atIndex + 1, dotIndex);
-            String extension = email.substring(dotIndex + 1);
-            this.address = STR."\{emailID}@\{domain}.\{extension}";
+            this.address = email;
         } else {
             throw new IllegalArgumentException("Invalid email address");
         }
