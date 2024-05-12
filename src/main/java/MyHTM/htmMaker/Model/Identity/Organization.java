@@ -1,50 +1,52 @@
 package MyHTM.htmMaker.Model.Identity;
 
 import MyHTM.htmMaker.Model.Util.Util.Activeable;
-import MyHTM.htmMaker.Model.Util.Util.ID;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import java.util.ArrayList;
+import java.util.UUID;
 
+@Entity
+@Table
 public class Organization extends Activeable {
-    private final String id;
+
+    @Id
+    private String id;
     private String name;
-    private ArrayList<String> superUsersIds;
-
-    private void assignArguments(String name, User superUser) {
-        try{
-            isValidNewCompanyName(name);
-            this.name = name;
-            this.activate();
-            this.superUsersIds = new ArrayList<String>();
-            this.superUsersIds.add(superUser.getId());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
-    public Organization(String name, User superUser) {
-        try {
-            ID id = new ID();
-            this.id = id.getId();
-            if(superUser == null) throw new IllegalArgumentException("User cannot be null");
-            assignArguments(name, superUser);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
+    private String superUserId;
+    //todo; in the future, we will have a list of super users
 
     public Organization(String name, String superUserName, String superUserLastName, String superUserEmail) {
         try {
-            ID id = new ID();
-            this.id = id.getId();
-            User superUser = new User(superUserName, superUserLastName, superUserEmail);
-            this.assignArguments(name, superUser);
+            isValidNewCompanyName(name);
+            AppUser.isValidNewUser(superUserName, superUserLastName, superUserEmail);
+            this.id = UUID.randomUUID().toString();
+            this.name = name;
+            this.activate();
+            AppUser superAppUser = new AppUser(superUserName, superUserLastName, superUserEmail, this.id);
+            this.superUserId= superAppUser.getId();
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
-    private void isValidNewCompanyName(String name) {
+    protected Organization() {
+    }
+
+
+    public Organization(String name, String superUserId) {
+        try {
+            if(superUserId == null) throw new IllegalArgumentException("SuperUserId cannot be null");
+            this.id = UUID.randomUUID().toString();
+            this.name = name;
+            this.superUserId = superUserId;
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    public static void isValidNewCompanyName(String name) {
         if(name == null) {
             throw new IllegalArgumentException("Organization name cannot be null");
         }
@@ -57,22 +59,28 @@ public class Organization extends Activeable {
         return name;
     }
 
-    public ArrayList<String> getSuperUsersIds() {
-        return superUsersIds;
-    }
+//    public ArrayList<String> getSuperUsersIds() {
+//        return superUsersIds;
+//    }
 
-    public void addSuperUser(User superUser) {
-        this.superUsersIds.add(superUser.getId());
-    }
+//    public void addSuperUser(String firstName, String lastName, String email) {
+//        User user = new User(firstName, lastName, email, this.id);
+//        this.superUsersIds.add(user.getId());
+//    }
 
-    public void removeSuperUser(User superUser) {
-        if(superUser == null) throw new IllegalArgumentException("User cannot be null");
-        if(!this.superUsersIds.contains(superUser.getId())) throw new IllegalArgumentException("User not in organization");
-        this.superUsersIds.remove(superUser.getId());
-    }
+//    public void addOrdinaryUser(String firstName, String lastName, String email) {
+//        User user = new User(firstName, lastName, email, this.id);
+//    }
+    //todo; make a method for remving an ordinary user
+
+//    public void removeSuperUser(User superUser) {
+//        if(superUser == null) throw new IllegalArgumentException("User cannot be null");
+//        if(!this.superUsersIds.contains(superUser.getId())) throw new IllegalArgumentException("User not in organization");
+//        this.superUsersIds.remove(superUser.getId());
+//    }
 
     public void setName(String newName) {
-        this.isValidNewCompanyName(newName);
+        isValidNewCompanyName(newName);
         this.name = newName;
     }
 
@@ -80,7 +88,11 @@ public class Organization extends Activeable {
         return id;
     }
 
-    public boolean isSuperUser(User user) {
-        return this.superUsersIds.contains(user.getId());
-    }
+//    public boolean isSuperUser(User user) {
+//        return this.superUsersIds.contains(user.getId());
+//    }
+
+//    public void addNewUser(String name, String lastName, String email) {
+//        User newUser = new User(name, lastName, email, this.id);
+//    }
 }

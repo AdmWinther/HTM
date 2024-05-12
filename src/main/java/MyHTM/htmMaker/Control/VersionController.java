@@ -14,7 +14,7 @@ public class VersionController {
             this.appConfig = appConfig;
         }
 
-    @GetMapping("/v")
+    @GetMapping()
     public String getVersion() {
         System.out.println("Version 1.0x");
 

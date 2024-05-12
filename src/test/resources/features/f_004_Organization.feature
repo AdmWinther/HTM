@@ -12,6 +12,7 @@ Feature: Organization Class
       | "Abc Company" | "Pernille"| "Doe"     | "john"          | "User email address is not correct" |
       | "as"            | "Luise"   | "Doe"     | "john@doe.com"  | "Organization name too short, the minimum length is 3 characters."     |
 
+
   Scenario Outline: making a new organization successfully with correct data
     When attempt to make a new organization with correct name <name> firstName <firstName> lastName <lastName> and emailAddress <emailAddress> must succeed
     Then the organization must have the correct name <name> firstName <firstName> lastName <lastName> and emailAddress <emailAddress>
