@@ -34,6 +34,9 @@ public class OrganizationService {
     }
 
     public void save(Organization organization) {
+        //todo: Check if the organization already exists
+        //todo: Check if the organization name is unique
+        //todo: check if the super user does not exist in another organization
         organizationRepository.save(organization);
     }
 }
