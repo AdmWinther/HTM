@@ -1,19 +1,14 @@
 package MyHTM.htmMaker.Model.Identity;
 //
 import MyHTM.htmMaker.Model.Util.Util.Activeable;
-
-//import MyHTM.htmMaker.Service.Identity.UserService;
 import MyHTM.htmMaker.Model.Util.Util.Email;
 import jakarta.persistence.*;
 
-
-//
-//import java.util.Objects;
 import java.util.UUID;
 //
 @Entity
 @Table
-public class AppUser extends Activeable {
+public class Users extends Activeable {
 
     @Id
     private String id;
@@ -26,7 +21,7 @@ public class AppUser extends Activeable {
     @JoinColumn(name = "organizationId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_Organization_SuperUser"))
     private String organizationId;
 
-    public AppUser(String name, String lastName, String email, String OrganizationId) {
+    public Users(String name, String lastName, String email, String OrganizationId) {
 
         try {
             isValidNewUser(name, lastName, email);
@@ -44,7 +39,7 @@ public class AppUser extends Activeable {
         }
     }
 
-    public AppUser(String name, String lastName, String email) {
+    public Users(String name, String lastName, String email) {
 
         try {
             isValidNewUser(name, lastName, email);
@@ -62,7 +57,7 @@ public class AppUser extends Activeable {
     }
 
     //
-    protected AppUser() {
+    protected Users() {
 //        this.id = UUID.randomUUID().toString();
     }
 //

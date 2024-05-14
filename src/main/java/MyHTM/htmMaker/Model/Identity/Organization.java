@@ -20,12 +20,12 @@ public class Organization extends Activeable {
     public Organization(String name, String superUserName, String superUserLastName, String superUserEmail) {
         try {
             isValidNewCompanyName(name);
-            AppUser.isValidNewUser(superUserName, superUserLastName, superUserEmail);
+            Users.isValidNewUser(superUserName, superUserLastName, superUserEmail);
             this.id = UUID.randomUUID().toString();
             this.name = name;
             this.activate();
-            AppUser superAppUser = new AppUser(superUserName, superUserLastName, superUserEmail, this.id);
-            this.superUserId= superAppUser.getId();
+            Users superUsers = new Users(superUserName, superUserLastName, superUserEmail, this.id);
+            this.superUserId= superUsers.getId();
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }

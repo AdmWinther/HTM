@@ -1,7 +1,6 @@
 package MyHTM.htmMaker.Service.Identity;
 
-import MyHTM.htmMaker.Control.UserController;
-import MyHTM.htmMaker.Model.Identity.AppUser;
+import MyHTM.htmMaker.Model.Identity.Users;
 import MyHTM.htmMaker.Model.Identity.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,10 +21,10 @@ public class OrganizationService {
     }
 
     public Organization generateRandomOrganization() {
-        AppUser appUser = userService.generateRandomUser();
-        Organization organization = new Organization("My Organization", appUser.getId());
-        appUser.setOrganizationId(organization.getId());
-        userService.save(appUser);
+        Users users = userService.generateRandomUser();
+        Organization organization = new Organization("My Organization", users.getId());
+        users.setOrganizationId(organization.getId());
+        userService.save(users);
         return organization;
     }
 

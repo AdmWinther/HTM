@@ -1,12 +1,18 @@
 package MyHTM.htmMaker.Model.Identity;
 
 import MyHTM.htmMaker.Model.Util.Util.Activeable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
+@Entity
+@Table
 public class Project extends Activeable {
-    private final String id;
+
+    @Id
+    private String id;
     private String name;
     //todo: in the future, each project can have multiple project managers
     private String projectManagersId;
@@ -18,6 +24,10 @@ public class Project extends Activeable {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
+    }
+
+    protected Project() {
+
     }
 
     private void assignArguments(String name, String projectManagerId) {
@@ -37,7 +47,7 @@ public class Project extends Activeable {
         }
     }
 
-    public void addProjectManager(AppUser user) {
+    public void addProjectManager(Users user) {
         // add a SuperUser to the project
         if(user == null) throw new IllegalArgumentException("User cannot be null");
         if(projectManagersId.equals(user.getId())) throw new IllegalArgumentException("User is already a project manager");
