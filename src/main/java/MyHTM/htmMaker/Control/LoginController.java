@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     //create a post endpoint that receives username and password form the post request
-    @PostMapping()
+    @PostMapping("/")
     public String checkLogin() {
         return "Hello world from LoginController!";
     }
