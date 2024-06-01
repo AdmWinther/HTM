@@ -34,16 +34,19 @@ public class UserController {
 
     @GetMapping("/getAll")
     public List<Users> getAll() {
+        System.out.println("Get all users");
         return userService.getAll();
     }
 
-    @PostMapping("/newUser")
+    @PostMapping(value = "/newUser", produces = "application/json", consumes = "application/json")
     public void newUser(@RequestBody UserRequest userRequest) {
+        System.out.println("User email"+ userRequest.getEmail());
         //the username and last name is sent via request body
         Users user = new Users(
                 userRequest.getName(),
                 userRequest.getLastName(),
                 userRequest.getEmail(),
+                userRequest.getPassword(),
                 userRequest.getOrganizationId());
 
         System.out.println("User is received"+ userRequest.getName());

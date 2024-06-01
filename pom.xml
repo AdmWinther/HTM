@@ -69,12 +69,17 @@
 			<version>5.7.0</version>
 			<scope>test</scope>
 		</dependency>
+
 <!--		<dependency>-->
-<!--			<groupId>org.sonatype.plexus</groupId>-->
-<!--			<artifactId>plexus-sec-dispatcher</artifactId>-->
-<!--			<version>1.3</version>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-security</artifactId>-->
 <!--		</dependency>-->
 
+<!--		<dependency>-->
+<!--			<groupId>io.jsonwebtoken</groupId>-->
+<!--			<artifactId>jjwt</artifactId>-->
+<!--			<version>0.9.1</version>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<build>

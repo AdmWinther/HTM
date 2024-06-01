@@ -21,6 +21,24 @@ public class Users extends Activeable {
     @JoinColumn(name = "organizationId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_Organization_SuperUser"))
     private String organizationId;
 
+    public Users(String name, String lastName, String email, String password, String OrganizationId) {
+
+        try {
+            isValidNewUser(name, lastName, email);
+            this.id = UUID.randomUUID().toString();
+            this.name = name;
+            this.lastName = lastName;
+            this.emailAddress = email;
+            this.password = password;
+            this.organizationId = OrganizationId;
+            //todo: the user must be activated only after the email address is confirmed
+            this.activate();
+            //todo; register the user on the database
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
     public Users(String name, String lastName, String email, String OrganizationId) {
 
         try {

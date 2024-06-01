@@ -28,6 +28,9 @@ public class UserService {
     }
 
     public void save(Users user) {
+        //todo: Check if the user already exists
+        //todo: Check if the user email is unique
+        //todo: check if the user OrganizationId exists
         userRepository.save(user);
     }
 }
