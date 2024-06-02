@@ -1,13 +1,11 @@
 package MyHTM.htmMaker.Control;
 
 import MyHTM.htmMaker.Model.Identity.Users;
+import MyHTM.htmMaker.Model.Util.UserRequest;
+import MyHTM.htmMaker.Service.DataBaseOperationResult;
 import MyHTM.htmMaker.Service.Identity.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,24 +30,30 @@ public class UserController {
         return userService.generateRandomUser();
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/getAll")
     public List<Users> getAll() {
         System.out.println("Get all users");
-        return userService.getAll();
+        List<Users> users = userService.getAll();
+        for (Users user : users) {
+            System.out.println(user.getName());
+        }
+        return users;
     }
 
+    //allow cross-origin requests
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping(value = "/newUser", produces = "application/json", consumes = "application/json")
-    public void newUser(@RequestBody UserRequest userRequest) {
-        System.out.println("User email"+ userRequest.getEmail());
+    public DataBaseOperationResult newUser(@RequestBody UserRequest userRequest) {
+
         //the username and last name is sent via request body
         Users user = new Users(
                 userRequest.getName(),
-                userRequest.getLastName(),
+                userRequest.getLastname(),
                 userRequest.getEmail(),
                 userRequest.getPassword(),
                 userRequest.getOrganizationId());
 
-        System.out.println("User is received"+ userRequest.getName());
-        userService.save(user);
+        return userService.save(user);
     }
 }

@@ -1,15 +1,15 @@
-package MyHTM.htmMaker.Control;
+package MyHTM.htmMaker.Model.Util;
 
 public class UserRequest {
     private final String name;
-    private final String lastName;
+    private final String lastname;
     private final String email;
     private final String password;
     private final String organizationId;
 
     public UserRequest(String name, String lastName, String email, String password, String organizationId) {
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastName;
         this.email = email;
         this.password = password;
         this.organizationId = organizationId;
@@ -19,8 +19,8 @@ public class UserRequest {
         return name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
     public String getEmail() {

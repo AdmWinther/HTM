@@ -1,6 +1,6 @@
 package MyHTM.htmMaker.Model.Identity;
 
-import MyHTM.htmMaker.Model.Util.Util.Activeable;
+import MyHTM.htmMaker.Model.Util.Activeable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;

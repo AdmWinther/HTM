@@ -1,4 +1,4 @@
-package MyHTM.htmMaker.Model.Util.Util;
+package MyHTM.htmMaker.Model.Util;
 
 //import MyHTM.htmMaker.Model.Util.Util.ID;
 

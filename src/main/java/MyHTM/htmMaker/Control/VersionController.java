@@ -1,6 +1,8 @@
 package MyHTM.htmMaker.Control;
 
+import MyHTM.htmMaker.Model.Util.Version;
 import MyHTM.htmMaker.Utils.AppConfig;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +16,11 @@ public class VersionController {
             this.appConfig = appConfig;
         }
 
-    @GetMapping()
-    public String getVersion() {
-        System.out.println("Version 1.0x");
-
-        return this.appConfig.getVersion();
-    }
+        //allow cross-origin requests
+        @CrossOrigin(origins = "http://localhost:5173")
+        @GetMapping()
+        public Version getVersion() {
+            System.out.println(this.appConfig.getVersion());
+            return this.appConfig.getVersion();
+        }
 }

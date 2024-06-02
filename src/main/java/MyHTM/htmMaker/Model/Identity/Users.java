@@ -1,7 +1,7 @@
 package MyHTM.htmMaker.Model.Identity;
 //
-import MyHTM.htmMaker.Model.Util.Util.Activeable;
-import MyHTM.htmMaker.Model.Util.Util.Email;
+import MyHTM.htmMaker.Model.Util.Activeable;
+import MyHTM.htmMaker.Model.Util.Email;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -61,17 +61,21 @@ public class Users extends Activeable {
 
         try {
             isValidNewUser(name, lastName, email);
-            this.id = UUID.randomUUID().toString();
-            this.name = name;
-            this.lastName = lastName;
-            this.emailAddress = email;
-            this.password = "";
+            setProperties(name, lastName, email);
             //todo: the user must be activated only after the email address is confirmed
             this.activate();
             //todo; register the user on the database
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
+    }
+
+    private void setProperties(String name, String lastName, String email) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.lastName = lastName;
+        this.emailAddress = email;
+        this.password = "";
     }
 
     //

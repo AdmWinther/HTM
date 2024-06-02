@@ -1,5 +1,6 @@
 package MyHTM.htmMaker.Utils;
 
+import MyHTM.htmMaker.Model.Util.Version;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,8 +12,8 @@ public class AppConfig {
 
     // getters and setters
 
-    public String getVersion() {
-        return version;
+    public Version getVersion() {
+        return new Version(this.version);
     }
 
     public void setVersion(String version) {
