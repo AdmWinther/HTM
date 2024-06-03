@@ -56,4 +56,10 @@ public class UserController {
 
         return userService.save(user);
     }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/getUserByEmail")
+    public Users getUserByEmail(@RequestParam String email) {
+        return userService.findUserByEmailAddress(email);
+    }
 }

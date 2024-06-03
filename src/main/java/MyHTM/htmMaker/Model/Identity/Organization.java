@@ -88,6 +88,10 @@ public class Organization extends Activeable {
         return id;
     }
 
+    public String getSuperUserId() {
+        return superUserId;
+    }
+
 //    public boolean isSuperUser(User user) {
 //        return this.superUsersIds.contains(user.getId());
 //    }

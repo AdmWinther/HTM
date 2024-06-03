@@ -40,4 +40,21 @@ public class UserService {
             return new DataBaseOperationResult(true, "User saved successfully");
         }
     }
+
+    public Users findUserByEmailAddress(String emailAddress) {
+        Optional<Users> existingUser = userRepository.findByEmailAddress(emailAddress);
+        return existingUser.orElse(null);
+    }
+
+    public DataBaseOperationResult updateUserOrganizationID(String userId, String organizationId) {
+        Optional<Users> existingUser = userRepository.findById(userId);
+        if (existingUser.isPresent()) {
+            Users user = existingUser.get();
+            user.setOrganizationId(organizationId);
+            userRepository.save(user);
+            return new DataBaseOperationResult(true, "User organization ID updated successfully");
+        } else {
+            return new DataBaseOperationResult(false, "User not found");
+        }
+    }
 }

@@ -51,4 +51,7 @@ public class OrganizationService {
     }
 
 
+    public Organization getOrganizationBySuperUserId(String id) {
+        return organizationRepository.findBySuperUserId(id).orElse(null);
+    }
 }

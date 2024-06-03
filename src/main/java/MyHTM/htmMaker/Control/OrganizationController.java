@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/organization")
 public class OrganizationController {
     private final OrganizationService organizationService;
+    private final UserService userService;
 
 
     @Autowired
@@ -23,6 +24,7 @@ public class OrganizationController {
             UserService userService)
     {
         this.organizationService = organizationService;
+        this.userService = userService;
     }
 
     @GetMapping("/test")
@@ -42,11 +44,13 @@ public class OrganizationController {
         return organizationService.getAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/newOrganization")
     public DataBaseOperationResult newOrganization(@RequestBody OrganizationRequest organizationRequest) {
-        Organization organization = new Organization(
-            organizationRequest.getOrganizationName(),
-            organizationRequest.getSuperuserName());
+
+        System.out.println("new Organization started!");
+        System.out.println("Organization Name: " + organizationRequest.getOrganizationName());
+
         Users user = new Users(
             organizationRequest.getSuperuserName(),
             organizationRequest.getSuperuserLastname(),
@@ -54,6 +58,20 @@ public class OrganizationController {
             organizationRequest.getSuperuserPassword());
 
 
-        return organizationService.saveNewOrganization(organization);
+        DataBaseOperationResult MakingNewUserResult = userService.save(user);
+        if(!MakingNewUserResult.isOperationDone()) {
+            return MakingNewUserResult;
+        } else {
+            Users registeredUser = userService.findUserByEmailAddress(user.getEmailAddress());
+            Organization organization = new Organization(
+                organizationRequest.getOrganizationName(),
+                    registeredUser.getId());
+            organizationService.saveNewOrganization(organization);
+            Organization registeredOrganization = organizationService.getOrganizationBySuperUserId(registeredUser.getId());
+
+            DataBaseOperationResult dataBaseOperationResult;
+            dataBaseOperationResult = userService.updateUserOrganizationID(registeredUser.getId(), registeredOrganization.getId());
+        }
+        return new DataBaseOperationResult(true, "Organization saved successfully");
     }
 }

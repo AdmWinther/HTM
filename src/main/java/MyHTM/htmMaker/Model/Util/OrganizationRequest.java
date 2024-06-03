@@ -1,38 +1,39 @@
 package MyHTM.htmMaker.Model.Util;
 
 public class OrganizationRequest {
-    private final String organizationName;
-    private final String superuserName;
-    private final String superuserLastname;
-    private final String superuserEmailAddress;
-    private final String superuserPassword;
+    private final String organization_name;
+    private final String superuser_name;
+    private final String superuser_lastname;
+    private final String superuser_email;
+    private final String superuser_password;
 
 
-    public OrganizationRequest(String organizationName, String superuserName, String superuserLastname, String superuserEmailAddress, String superuserPassword) {
-        this.organizationName = organizationName;
-        this.superuserName = superuserName;
-        this.superuserLastname = superuserLastname;
-        this.superuserEmailAddress = superuserEmailAddress;
-        this.superuserPassword = superuserPassword;
+    public OrganizationRequest(String organization_name, String superuser_name, String superuser_lastname, String superuser_email, String superuser_password) {
+        System.out.println("hello"+superuser_email);
+        this.organization_name = organization_name;
+        this.superuser_name = superuser_name;
+        this.superuser_lastname = superuser_lastname;
+        this.superuser_email = superuser_email;
+        this.superuser_password = superuser_password;
     }
 
     public String getOrganizationName() {
-        return organizationName;
+        return organization_name;
     }
 
     public String getSuperuserName() {
-        return superuserName;
+        return superuser_name;
     }
 
     public String getSuperuserLastname() {
-        return superuserLastname;
+        return superuser_lastname;
     }
 
     public String getSuperuserEmailAddress() {
-        return superuserEmailAddress;
+        return superuser_email;
     }
 
     public String getSuperuserPassword() {
-        return superuserPassword;
+        return superuser_password;
     }
 }
