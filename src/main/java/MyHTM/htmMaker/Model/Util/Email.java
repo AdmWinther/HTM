@@ -31,7 +31,7 @@ public class Email {
         int atIndex = email.indexOf('@');
         int dotIndex = email.lastIndexOf('.');
 
-        // Check that "@" exists, is not the first character, and has at least 3 characters between it and the "."
+        // Check that "@" exists, is not the first character, and has at least 3 characters between @ and the dot
         if (atIndex > 0 && dotIndex > (atIndex + 3)) {
             // Check that there's at least one character before the "@"
             // the minimum number of characters before DOT is 5, for example: a@abc.de therefore DOT is at least 4.

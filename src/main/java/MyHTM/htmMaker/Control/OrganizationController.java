@@ -1,11 +1,11 @@
 package MyHTM.htmMaker.Control;
 
 import MyHTM.htmMaker.Model.Identity.Organization;
-import MyHTM.htmMaker.Model.Identity.Users;
-import MyHTM.htmMaker.Model.Util.OrganizationRequest;
+import MyHTM.htmMaker.Model.Identity.MyUser;
+import MyHTM.htmMaker.Model.Util.OrganizationAPIPostRequest;
 import MyHTM.htmMaker.Service.DataBaseOperationResult;
 import MyHTM.htmMaker.Service.Identity.OrganizationService;
-import MyHTM.htmMaker.Service.Identity.UserService;
+import MyHTM.htmMaker.Service.Identity.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,16 +15,16 @@ import java.util.List;
 @RequestMapping("/api/organization")
 public class OrganizationController {
     private final OrganizationService organizationService;
-    private final UserService userService;
+    private final MyUserService myUserService;
 
 
     @Autowired
     public OrganizationController(
             OrganizationService organizationService,
-            UserService userService)
+            MyUserService myUserService)
     {
         this.organizationService = organizationService;
-        this.userService = userService;
+        this.myUserService = myUserService;
     }
 
     @GetMapping("/test")
@@ -46,32 +46,21 @@ public class OrganizationController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/newOrganization")
-    public DataBaseOperationResult newOrganization(@RequestBody OrganizationRequest organizationRequest) {
+    public DataBaseOperationResult newOrganization(@RequestBody OrganizationAPIPostRequest organizationRequest) {
 
         System.out.println("new Organization started!");
         System.out.println("Organization Name: " + organizationRequest.getOrganizationName());
 
-        Users user = new Users(
+        MyUser user = new MyUser(
             organizationRequest.getSuperuserName(),
             organizationRequest.getSuperuserLastname(),
             organizationRequest.getSuperuserEmailAddress(),
-            organizationRequest.getSuperuserPassword());
+            organizationRequest.getSuperuserPassword(),
+            "Superuser");
 
+        Organization organization = new Organization(organizationRequest.getOrganizationName());
 
-        DataBaseOperationResult MakingNewUserResult = userService.save(user);
-        if(!MakingNewUserResult.isOperationDone()) {
-            return MakingNewUserResult;
-        } else {
-            Users registeredUser = userService.findUserByEmailAddress(user.getEmailAddress());
-            Organization organization = new Organization(
-                organizationRequest.getOrganizationName(),
-                    registeredUser.getId());
-            organizationService.saveNewOrganization(organization);
-            Organization registeredOrganization = organizationService.getOrganizationBySuperUserId(registeredUser.getId());
-
-            DataBaseOperationResult dataBaseOperationResult;
-            dataBaseOperationResult = userService.updateUserOrganizationID(registeredUser.getId(), registeredOrganization.getId());
-        }
-        return new DataBaseOperationResult(true, "Organization saved successfully");
+        DataBaseOperationResult dataBaseOperationResult = this.organizationService.RecordNewOrganization(user, organization);
+        return dataBaseOperationResult;
     }
 }

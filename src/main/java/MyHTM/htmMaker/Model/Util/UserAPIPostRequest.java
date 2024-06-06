@@ -1,18 +1,16 @@
 package MyHTM.htmMaker.Model.Util;
 
-public class UserRequest {
+public class UserAPIPostRequest {
     private final String name;
     private final String lastname;
     private final String email;
     private final String password;
-    private final String organizationId;
 
-    public UserRequest(String name, String lastName, String email, String password, String organizationId) {
+    public UserAPIPostRequest(String name, String lastName, String email, String password, String organizationId) {
         this.name = name;
         this.lastname = lastName;
         this.email = email;
         this.password = password;
-        this.organizationId = organizationId;
     }
 
     public String getName() {
@@ -29,9 +27,5 @@ public class UserRequest {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getOrganizationId() {
-        return organizationId;
     }
 }

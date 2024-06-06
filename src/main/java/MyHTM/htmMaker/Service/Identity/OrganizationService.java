@@ -1,9 +1,9 @@
 package MyHTM.htmMaker.Service.Identity;
 
-import MyHTM.htmMaker.Model.Identity.Users;
+import MyHTM.htmMaker.Model.Identity.MyUser;
 import MyHTM.htmMaker.Model.Identity.Organization;
-import MyHTM.htmMaker.Model.Util.OrganizationRequest;
 import MyHTM.htmMaker.Service.DataBaseOperationResult;
+import MyHTM.htmMaker.Service.SuperuserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import MyHTM.htmMaker.Repository.Identity.OrganizationRepository;
@@ -13,20 +13,21 @@ import java.util.List;
 @Component
 public class OrganizationService {
 
-    private final UserService userService;
+    private final MyUserService myUserService;
+    private final SuperuserService superuserService;
     OrganizationRepository organizationRepository;
 
     @Autowired
-    public OrganizationService(OrganizationRepository organizationRepository, UserService userService) {
+    public OrganizationService(OrganizationRepository organizationRepository, MyUserService myUserService, SuperuserService superuserService) {
         this.organizationRepository = organizationRepository;
-        this.userService = userService;
+        this.myUserService = myUserService;
+        this.superuserService = superuserService;
     }
 
     public Organization generateRandomOrganization() {
-        Users users = userService.generateRandomUser();
-        Organization organization = new Organization("My Organization", users.getId());
-        users.setOrganizationId(organization.getId());
-        userService.save(users);
+        MyUser myUser = myUserService.generateRandomUser();
+        Organization organization = new Organization("My Organization", myUser.getId());
+        myUserService.save(myUser);
         return organization;
     }
 
@@ -53,5 +54,18 @@ public class OrganizationService {
 
     public Organization getOrganizationBySuperUserId(String id) {
         return organizationRepository.findBySuperUserId(id).orElse(null);
+    }
+
+    public DataBaseOperationResult RecordNewOrganization(MyUser user, Organization organization) {
+        //check if there is a user with the same email address in the database.
+        boolean isEmailAddressValid = myUserService.isEmailAddressValid(user.getEmailAddress());
+        if(!isEmailAddressValid) {
+            throw new RuntimeException("Either a user is already registered with this email address or the email address in not in the right format.");
+        } else {
+            MyUser registeredUser = myUserService.saveAndReturn(user);
+            Organization registeredOrganization = organizationRepository.save(organization);
+            superuserService.save(registeredOrganization, registeredUser);
+            return new DataBaseOperationResult(true, "Organization saved successfully");
+        }
     }
 }

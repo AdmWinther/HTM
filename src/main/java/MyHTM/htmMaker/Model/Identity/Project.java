@@ -47,7 +47,7 @@ public class Project extends Activeable {
         }
     }
 
-    public void addProjectManager(Users user) {
+    public void addProjectManager(MyUser user) {
         // add a SuperUser to the project
         if(user == null) throw new IllegalArgumentException("User cannot be null");
         if(projectManagersId.equals(user.getId())) throw new IllegalArgumentException("User is already a project manager");

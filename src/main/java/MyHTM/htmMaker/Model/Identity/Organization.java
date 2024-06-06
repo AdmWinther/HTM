@@ -14,17 +14,19 @@ public class Organization extends Activeable {
     @Id
     private String id;
     private String name;
+    private String CVRnumber;
     private String superUserId;
     //todo; in the future, we will have a list of super users
 
     public Organization(String name, String superUserName, String superUserLastName, String superUserEmail) {
         try {
             isValidNewCompanyName(name);
-            Users.isValidNewUser(superUserName, superUserLastName, superUserEmail);
+            MyUser.isValidNewUser(superUserName, superUserLastName, superUserEmail);
             this.id = UUID.randomUUID().toString();
             this.name = name;
+            this.CVRnumber = "12345678";
             this.activate();
-            Users superUsers = new Users(superUserName, superUserLastName, superUserEmail, this.id);
+            MyUser superUsers = new MyUser(superUserName, superUserLastName, superUserEmail, this.id, "SuperUser");
             this.superUserId= superUsers.getId();
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -32,6 +34,15 @@ public class Organization extends Activeable {
     }
 
     protected Organization() {
+    }
+
+    public Organization(String name) {
+        try {
+            this.id = UUID.randomUUID().toString();
+            this.name = name;
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
 
