@@ -65,7 +65,7 @@ public class SecurityConfiguration {
             }).formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                     .build();
         } catch (Exception e) {
-            throw new RuntimeException(STR."Error in security configuration. Build failed.\{e.getMessage()}") ;
+            throw new RuntimeException("Error in security configuration. Build failed."+e.getMessage()) ;
         }
     }
 
