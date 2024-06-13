@@ -69,9 +69,24 @@ public class SecurityConfiguration {
         }
     }
 
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return userDetailService;
+//    }
+
     @Bean
     public UserDetailsService userDetailsService() {
-        return userDetailService;
+        UserDetails user = User.builder()
+                .username("user")
+                .password("$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq")
+                .roles("User")
+                .build();
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password("$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq")
+                .roles("Admin", "User")
+                .build();
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
     @Bean
