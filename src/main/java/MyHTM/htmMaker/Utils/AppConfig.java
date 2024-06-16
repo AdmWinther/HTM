@@ -13,7 +13,7 @@ public class AppConfig {
     // getters and setters
 
     public Version getVersion() {
-        return new Version(this.version);
+        return new Version("1.0.0.2");
     }
 
     public void setVersion(String version) {
