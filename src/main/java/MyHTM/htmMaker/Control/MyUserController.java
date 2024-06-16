@@ -31,6 +31,18 @@ public class MyUserController {
         return myUserService.generateRandomUser();
     }
 
+    @GetMapping("/generateUser")
+    public MyUser generateUser() {
+//        return new AppUser("Christian"+Math.round( Math.random()*10e2), "Perez", "ChrisPrz"+Math.round(Math.random()*10e2)+"@gmail.com", "dfafd");
+        return myUserService.generateUser();
+    }
+
+    @GetMapping("/generateAdmin")
+    public MyUser generateAdmin() {
+//        return new AppUser("Christian"+Math.round( Math.random()*10e2), "Perez", "ChrisPrz"+Math.round(Math.random()*10e2)+"@gmail.com", "dfafd");
+        return myUserService.generateAdmin();
+    }
+
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/getAll")
     public List<MyUser> getAll() {

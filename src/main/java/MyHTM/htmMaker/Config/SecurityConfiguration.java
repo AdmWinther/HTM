@@ -57,7 +57,9 @@ public class SecurityConfiguration {
                 //The endpoint /api/organization/generateRandomOrganization is open to all users
                 registry.requestMatchers("/api/organization/generateRandomOrganization").hasRole("Admin");
                 //The endpoint /api/user/generateRandomUser is open to Admin
-                registry.requestMatchers("/api/user/generateRandomUser").hasRole("Admin");
+                registry.requestMatchers("/api/user/generateRandomUser").permitAll();
+                registry.requestMatchers("/api/user/generateUser").permitAll();
+                registry.requestMatchers("/api/user/generateAdmin").permitAll();
 
                 //The endpoint /api/superuser/newUser is open to superusers
                 registry.requestMatchers("/api/superuser/test").hasRole("Superuser");

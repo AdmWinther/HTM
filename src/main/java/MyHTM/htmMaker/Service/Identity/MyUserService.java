@@ -25,7 +25,7 @@ public class MyUserService {
                 "Perez",
                 "test"+Math.round( Math.random()*10e2),
                 "ChrisPrz"+Math.round(Math.random()*10e2)+"@gmail.com",
-                "$2a$12$UCQGsmuHpa3rfgCGPV0nkO9Hc75go8RHuZNpU4/sNutFKhvTJ0n22",
+                "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
                 "Admin");
         myUserRepository.save(myUser);
         return myUser;
@@ -73,5 +73,29 @@ public class MyUserService {
 
     public Optional<MyUser> findUserByUsername(String username) {
         return myUserRepository.findByUsername(username);
+    }
+
+    public MyUser generateUser() {
+        MyUser myUser = new MyUser(
+                "User",
+                "user",
+                "user",
+                "user@user.com",
+                "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
+                "User");
+        myUserRepository.save(myUser);
+        return myUser;
+    }
+
+    public MyUser generateAdmin() {
+        MyUser myUser = new MyUser(
+                "Admin",
+                "admin",
+                "admin",
+                "admin@user.com",
+                "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
+                "Admin");
+        myUserRepository.save(myUser);
+        return myUser;
     }
 }
