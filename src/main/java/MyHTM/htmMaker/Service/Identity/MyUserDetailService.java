@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class MyUserDetailService implements UserDetailsService {
-    private MyUserService myUserService;
+    private final MyUserService myUserService;
 
     @Autowired
     public MyUserDetailService(MyUserService myUserService) {
@@ -21,15 +21,14 @@ public class MyUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<MyUser> myUser = myUserService.findUserByEmailAddress(username);
+        Optional<MyUser> myUser = myUserService.findUserByUsername(username);
         if(myUser.isPresent()) {
             MyUser userObject = myUser.get();
-            UserDetails userDetails = User.builder()
-                    .username(userObject.getEmailAddress())
+            return User.builder()
+                    .username(userObject.getUsername())
                     .password(userObject.getPassword())
                     .roles(userObject.getRole())
                     .build();
-            return userDetails;
         } else {
             throw new UsernameNotFoundException("User"+username+" not found");
         }

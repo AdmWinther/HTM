@@ -51,6 +51,7 @@ public class MyUserController {
         MyUser user = new MyUser(
                 userRequest.getName(),
                 userRequest.getLastname(),
+                userRequest.getUsername(),
                 userRequest.getEmail(),
                 userRequest.getPassword(),
                 "Admin");
@@ -68,6 +69,17 @@ public class MyUserController {
     @GetMapping("/getUserByEmail")
     public Optional<MyUser> getUserByEmail(@RequestParam String email) {
         Optional<MyUser> myUser = myUserService.findUserByEmailAddress(email);
+        if(myUser.isPresent()) {
+            return myUser;
+        } else {
+            return null;
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/getUserByUsername")
+    public Optional<MyUser> getUserByUsername(@RequestParam String username) {
+        Optional<MyUser> myUser = myUserService.findUserByUsername(username);
         if(myUser.isPresent()) {
             return myUser;
         } else {

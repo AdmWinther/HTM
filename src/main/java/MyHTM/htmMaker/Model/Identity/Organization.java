@@ -18,7 +18,7 @@ public class Organization extends Activeable {
     private String superUserId;
     //todo; in the future, we will have a list of super users
 
-    public Organization(String name, String superUserName, String superUserLastName, String superUserEmail) {
+    public Organization(String name, String superUserName, String superUserLastName,String superUserUsername, String superUserEmail) {
         try {
             isValidNewCompanyName(name);
             MyUser.isValidNewUser(superUserName, superUserLastName, superUserEmail);
@@ -26,7 +26,7 @@ public class Organization extends Activeable {
             this.name = name;
             this.CVRnumber = "12345678";
             this.activate();
-            MyUser superUsers = new MyUser(superUserName, superUserLastName, superUserEmail, this.id, "SuperUser");
+            MyUser superUsers = new MyUser(superUserName, superUserLastName, superUserUsername, superUserEmail, this.id, "SuperUser");
             this.superUserId= superUsers.getId();
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());

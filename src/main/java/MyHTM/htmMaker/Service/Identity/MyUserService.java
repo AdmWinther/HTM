@@ -23,6 +23,7 @@ public class MyUserService {
     public MyUser generateRandomUser() {
         MyUser myUser = new MyUser("Christian"+Math.round( Math.random()*10e2),
                 "Perez",
+                "test"+Math.round( Math.random()*10e2),
                 "ChrisPrz"+Math.round(Math.random()*10e2)+"@gmail.com",
                 "$2a$12$UCQGsmuHpa3rfgCGPV0nkO9Hc75go8RHuZNpU4/sNutFKhvTJ0n22",
                 "Admin");
@@ -68,5 +69,9 @@ public class MyUserService {
         } else {
             return true;
         }
+    }
+
+    public Optional<MyUser> findUserByUsername(String username) {
+        return myUserRepository.findByUsername(username);
     }
 }
