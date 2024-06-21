@@ -54,7 +54,6 @@ public class OrganizationController {
         MyUser user = new MyUser(
             organizationRequest.getSuperuserName(),
             organizationRequest.getSuperuserLastname(),
-            organizationRequest.getSupreuserUsername(),
             organizationRequest.getSuperuserEmailAddress(),
             organizationRequest.getSuperuserPassword(),
             "Superuser");

@@ -46,7 +46,7 @@ public class RootController {
         if(myUser.isPresent()) {
             MyUser userObject = myUser.get();
             UserDetails userDetails = User.builder()
-                    .username(userObject.getUsername())
+                    .username(userObject.getEmailAddress())
                     .password(userObject.getPassword())
                     .roles(userObject.getRole())
                     .build();

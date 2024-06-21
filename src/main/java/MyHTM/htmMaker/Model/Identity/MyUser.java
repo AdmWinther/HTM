@@ -15,19 +15,17 @@ public class MyUser extends Activeable {
 
     private String name;
     private String lastName;
-    private String username;
     private String emailAddress;
     private String password;
     private String role;
 
-    public MyUser(String name, String lastName,String username, String email, String password, String userRole) {
+    public MyUser(String name, String lastName, String email, String password, String userRole) {
 
         try {
             isValidNewUser(name, lastName, email);
             this.id = UUID.randomUUID().toString();
             this.name = name;
             this.lastName = lastName;
-            this.username = username;
             this.emailAddress = email;
             this.password = password;
             this.role = userRole;
@@ -89,13 +87,5 @@ public class MyUser extends Activeable {
 
     public String getRole() {
         return role;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 }

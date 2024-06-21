@@ -23,7 +23,6 @@ public class MyUserService {
     public MyUser generateRandomUser() {
         MyUser myUser = new MyUser("Christian"+Math.round( Math.random()*10e2),
                 "Perez",
-                "test"+Math.round( Math.random()*10e2),
                 "ChrisPrz"+Math.round(Math.random()*10e2)+"@gmail.com",
                 "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
                 "Admin");
@@ -72,13 +71,13 @@ public class MyUserService {
     }
 
     public Optional<MyUser> findUserByUsername(String username) {
-        return myUserRepository.findByUsername(username);
+        //the email address of the user is used as the username
+        return myUserRepository.findByEmailAddress(username);
     }
 
     public MyUser generateUser() {
         MyUser myUser = new MyUser(
                 "User",
-                "user",
                 "user",
                 "user@user.com",
                 "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
@@ -89,10 +88,9 @@ public class MyUserService {
 
     public MyUser generateAdmin() {
         MyUser myUser = new MyUser(
-                "Admin",
-                "admin",
-                "admin",
-                "admin@user.com",
+                "AdminName",
+                "adminLastName",
+                "admin@admin.com",
                 "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
                 "Admin");
         myUserRepository.save(myUser);

@@ -59,11 +59,10 @@ public class MyUserController {
     @PostMapping(value = "/newUser", produces = "application/json", consumes = "application/json")
     public DataBaseOperationResult newUser(@RequestBody UserAPIPostRequest userRequest) {
 
-        //the username and last name is sent via request body
+        //the name and last name is sent via request body
         MyUser user = new MyUser(
                 userRequest.getName(),
                 userRequest.getLastname(),
-                userRequest.getUsername(),
                 userRequest.getEmail(),
                 userRequest.getPassword(),
                 "Admin");

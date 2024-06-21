@@ -26,7 +26,7 @@ public class Organization extends Activeable {
             this.name = name;
             this.CVRnumber = "12345678";
             this.activate();
-            MyUser superUsers = new MyUser(superUserName, superUserLastName, superUserUsername, superUserEmail, this.id, "SuperUser");
+            MyUser superUsers = new MyUser(superUserName, superUserLastName, superUserEmail, this.id, "SuperUser");
             this.superUserId= superUsers.getId();
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
