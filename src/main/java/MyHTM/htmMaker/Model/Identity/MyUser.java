@@ -4,7 +4,6 @@ import MyHTM.htmMaker.Model.Util.Activeable;
 import MyHTM.htmMaker.Model.Util.Email;
 import jakarta.persistence.*;
 
-import java.util.UUID;
 //
 @Entity
 @Table
@@ -23,7 +22,7 @@ public class MyUser extends Activeable {
 
         try {
             isValidNewUser(name, lastName, email);
-            this.id = UUID.randomUUID().toString();
+            this.id = ID.generateID();
             this.name = name;
             this.lastName = lastName;
             this.emailAddress = email;

@@ -49,17 +49,17 @@ public class SecurityConfiguration {
 
                 //The endpoint /api/organization/test is open to all users
                 registry.requestMatchers("/api/organization/test").permitAll();
-
                 //The endpoint /api/*/getAll is open to normal users
                 registry.requestMatchers("/api/organization/getAll").hasRole("User");
-                registry.requestMatchers("/api/user/getAll").hasRole("User");
-
                 //The endpoint /api/organization/generateRandomOrganization is open to all users
                 registry.requestMatchers("/api/organization/generateRandomOrganization").hasRole("Admin");
-                //The endpoint /api/user/generateRandomUser is open to Admin
+
+                registry.requestMatchers("/api/user/getAll").hasRole("User");
                 registry.requestMatchers("/api/user/generateRandomUser").permitAll();
                 registry.requestMatchers("/api/user/generateUser").permitAll();
                 registry.requestMatchers("/api/user/generateAdmin").permitAll();
+
+                registry.requestMatchers("/api/role/test").permitAll();
 
                 //The endpoint /api/superuser/newUser is open to superusers
                 registry.requestMatchers("/api/superuser/test").hasRole("Superuser");

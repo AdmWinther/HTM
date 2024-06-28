@@ -17,7 +17,7 @@ public class VersionController {
         }
 
         //allow cross-origin requests
-        @CrossOrigin(origins = "http://localhost:5173")
+//        @CrossOrigin(origins = "http://localhost:5173")
         @GetMapping()
         public Version getVersion() {
             System.out.println(this.appConfig.getVersion());

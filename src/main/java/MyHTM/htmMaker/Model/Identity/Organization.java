@@ -14,17 +14,15 @@ public class Organization extends Activeable {
     @Id
     private String id;
     private String name;
-    private String CVRnumber;
     private String superUserId;
     //todo; in the future, we will have a list of super users
 
-    public Organization(String name, String superUserName, String superUserLastName,String superUserUsername, String superUserEmail) {
+    public Organization(String name, String superUserName, String superUserLastName, String superUserEmail) {
         try {
             isValidNewCompanyName(name);
             MyUser.isValidNewUser(superUserName, superUserLastName, superUserEmail);
-            this.id = UUID.randomUUID().toString();
+            this.id = ID.generateID();
             this.name = name;
-            this.CVRnumber = "12345678";
             this.activate();
             MyUser superUsers = new MyUser(superUserName, superUserLastName, superUserEmail, this.id, "SuperUser");
             this.superUserId= superUsers.getId();
@@ -70,25 +68,9 @@ public class Organization extends Activeable {
         return name;
     }
 
-//    public ArrayList<String> getSuperUsersIds() {
-//        return superUsersIds;
-//    }
-
-//    public void addSuperUser(String firstName, String lastName, String email) {
-//        User user = new User(firstName, lastName, email, this.id);
-//        this.superUsersIds.add(user.getId());
-//    }
-
-//    public void addOrdinaryUser(String firstName, String lastName, String email) {
-//        User user = new User(firstName, lastName, email, this.id);
-//    }
-    //todo; make a method for remving an ordinary user
-
-//    public void removeSuperUser(User superUser) {
-//        if(superUser == null) throw new IllegalArgumentException("User cannot be null");
-//        if(!this.superUsersIds.contains(superUser.getId())) throw new IllegalArgumentException("User not in organization");
-//        this.superUsersIds.remove(superUser.getId());
-//    }
+    public void setSuperUserId(String superUserId) {
+        this.superUserId = superUserId;
+    }
 
     public void setName(String newName) {
         isValidNewCompanyName(newName);
@@ -98,16 +80,4 @@ public class Organization extends Activeable {
     public String getId() {
         return id;
     }
-
-    public String getSuperUserId() {
-        return superUserId;
-    }
-
-//    public boolean isSuperUser(User user) {
-//        return this.superUsersIds.contains(user.getId());
-//    }
-
-//    public void addNewUser(String name, String lastName, String email) {
-//        User newUser = new User(name, lastName, email, this.id);
-//    }
 }
