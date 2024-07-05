@@ -26,11 +26,33 @@ public class MyUser extends Activeable {
             this.name = name;
             this.lastName = lastName;
             this.emailAddress = email;
+            isValidPassword(password);
             this.password = password;
+            isUserRoleValid(userRole);
             this.role = userRole;
             this.activate();
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    private void isUserRoleValid(String userRole) {
+        if(userRole == null || userRole.isEmpty()) {
+            throw new IllegalArgumentException("User role is required");
+        }
+        //todo: fetch all the possible roles from the database
+        if(!userRole.equals("Admin")){
+            if(!userRole.equals("User")){
+                if(!userRole.equals("Superuser")){
+                    throw new IllegalArgumentException("User role is not valid");
+                }
+            }
+        }
+    }
+
+    private void isValidPassword(String password) {
+        if(password == null || password.isEmpty()) {
+            throw new IllegalArgumentException("User password is required");
         }
     }
 
@@ -86,5 +108,9 @@ public class MyUser extends Activeable {
 
     public String getRole() {
         return role;
+    }
+
+    public void setID() {
+        this.id = ID.generateID();
     }
 }

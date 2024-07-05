@@ -5,6 +5,7 @@ import MyHTM.htmMaker.Model.Util.UserAPIPostRequest;
 import MyHTM.htmMaker.Service.DataBaseOperationResult;
 import MyHTM.htmMaker.Service.Identity.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +14,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/user")
 public class MyUserController {
-    private final MyUserService myUserService;
-
     @Autowired
-    public MyUserController(MyUserService myUserService) {
-        this.myUserService = myUserService;
-    }
+    private MyUserService myUserService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+//
+//    @Autowired
+//    public MyUserController(MyUserService myUserService) {
+//        this.myUserService = myUserService;
+//    }
 
     @GetMapping("/test")
     public String test() {
@@ -55,28 +59,28 @@ public class MyUserController {
     }
 
     //allow cross-origin requests
-    @CrossOrigin("http://localhost:5173")
+    @CrossOrigin("http://localhost:5173/")
     @PostMapping(value = "/newUser", produces = "application/json", consumes = "application/json")
-    public DataBaseOperationResult newUser(@RequestBody UserAPIPostRequest userRequest) {
-
-        //the name and last name is sent via request body
-        MyUser user = new MyUser(
-                userRequest.getName(),
-                userRequest.getLastname(),
-                userRequest.getEmail(),
-                userRequest.getPassword(),
-                "Admin");
-
-        return myUserService.save(user);
+    public DataBaseOperationResult newUser(@RequestBody MyUser myUser) {
+        System.out.println("the endpoint is reached.");
+        myUser.setPassword(passwordEncoder.encode(myUser.getPassword()));
+        myUser.setID();
+        System.out.println(myUser.getId());
+        System.out.println(myUser.getName());
+        System.out.println(myUser.getLastName());
+        System.out.println(myUser.getEmailAddress());
+        System.out.println(myUser.getPassword());
+        System.out.println(myUser.getRole());
+        return myUserService.save(myUser);
     }
 
-    @CrossOrigin("http://localhost:5173")
-    @GetMapping(value = "/newUser")
-    public String newUserGet() {
-        return "We Got a new user request!";
-    }
+//    @CrossOrigin("http://localhost:5173")
+//    @GetMapping(value = "/newUser")
+//    public String newUserGet() {
+//        return "We Got a new user request!";
+//    }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:5173/")
     @GetMapping("/getUserByEmail")
     public Optional<MyUser> getUserByEmail(@RequestParam String email) {
         Optional<MyUser> myUser = myUserService.findUserByEmailAddress(email);

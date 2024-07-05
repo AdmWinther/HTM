@@ -10,13 +10,12 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,13 +32,18 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
         try {
             return httpSecurity.authorizeHttpRequests(registry->{
+                //allow all get requests to the endpoint /version
+                registry.requestMatchers("/version").permitAll();
+                //allow all post requests to the endpoint /version
+                registry.requestMatchers(HttpMethod.POST, "/version").permitAll();
+
                 //The endpoint /api/user/test is open to all users
                 registry.requestMatchers("/api/user/test").permitAll();
                 registry.requestMatchers("api/user/getUserByEmail").permitAll();
                 registry.requestMatchers("api/user/getUserByUsername").permitAll();
 
                 //the endpoint for making a new user is open to all
-                registry.requestMatchers("/api/user/newUser").permitAll();
+                registry.requestMatchers(HttpMethod.POST,"/api/user/newUser").permitAll();
 //                registry.requestMatchers("/version").permitAll();
 
 
@@ -70,8 +74,11 @@ public class SecurityConfiguration {
                 //If any other request needs authentication
 //                registry.anyRequest().authenticated();
                 registry.anyRequest().permitAll();
-            }).formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                    .build();
+            }).csrf(csrf->{
+                 csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+            }).addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
+                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .build();
         } catch (Exception e) {
             throw new RuntimeException("Error in security configuration. Build failed."+e.getMessage()) ;
         }
@@ -81,27 +88,6 @@ public class SecurityConfiguration {
     public UserDetailsService userDetailsService() {
         return userDetailService;
     }
-
-    //This is a temporary solution to create users
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq")
-//                .roles("User")
-//                .build();
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password("$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq")
-//                .roles("Admin", "User")
-//                .build();
-//        UserDetails testAt = User.builder()
-//                .username("user@user.com")
-//                .password("$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq")
-//                .roles("Superuser", "Admin", "User")
-//                .build();
-//        return new InMemoryUserDetailsManager(user, admin, testAt);
-//    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
