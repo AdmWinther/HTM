@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
@@ -27,12 +29,36 @@ public class RootController {
     }
 
     //create a post endpoint that receives username and password form the post request
-    @CrossOrigin(origins = "http://localhost:3000")
+//    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/test")
-    public String testRoot(@RequestHeader HttpHeaders headers) {
-        System.out.println("Root/test is called by a get request.");
-        return (new Version("9.9.9")).toString();
+    public Version testRoot(@RequestHeader HttpHeaders headers) {
+        System.out.println("root/test is called by a get request.");
+        return new Version("9.9.9");
     }
+
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    //create a post endpoint that receives username and password form the post request
+//    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/csrf")
+    public String sendCSRF(@RequestHeader HttpHeaders headers) {
+        System.out.println("root/csrf is called by a get request.");
+        //generate a CSRF token
+//        CookieCsrfTokenRepository cookie = new CookieCsrfTokenRepository();
+        CookieCsrfTokenRepository myCookie = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        //system out the generated token
+        System.out.println(myCookie.generateToken(null).getToken());
+        return myCookie.generateToken(null).toString();
+    }
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+    //SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
 
     @PostMapping("/logger")
     public String login() {

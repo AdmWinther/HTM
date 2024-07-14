@@ -14,23 +14,9 @@ import static java.lang.System.getProperty;
 @SpringBootApplication
 public class HtmMakerAppApplication {
 
-//	public static void main(String[] args) {
-//		SpringApplication.run(HtmMakerAppApplication.class, args);
-//	}
 	public static void main(String[] args) {
 		SpringApplication.run(HtmMakerAppApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/root/*")
-						.allowedOrigins("http://localhost:3000")
-						.allowCredentials(true);
-			}
-		};
-	}
 
 }
