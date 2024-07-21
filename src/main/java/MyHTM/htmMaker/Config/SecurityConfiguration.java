@@ -1,5 +1,6 @@
 package MyHTM.htmMaker.Config;
 
+import MyHTM.htmMaker.AuthenticationSuccessHandler;
 import MyHTM.htmMaker.Service.Identity.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +37,8 @@ public class SecurityConfiguration {
                 registry.requestMatchers("/version").permitAll();
                 //allow all post requests to the endpoint /version
                 registry.requestMatchers(HttpMethod.POST, "/version").permitAll();
+
+                registry.requestMatchers(HttpMethod.POST, "/Login").permitAll();
 
                 //The endpoint /api/user/test is open to all users
                 registry.requestMatchers("/api/user/test").permitAll();
@@ -77,7 +80,13 @@ public class SecurityConfiguration {
             }).csrf(csrf->{
                  csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
             }).addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                    //allow access to the login page for all users
+//                    .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                    .formLogin(httpSecurityFormLoginConfigurer -> {
+                        httpSecurityFormLoginConfigurer
+                                .successHandler(new AuthenticationSuccessHandler())
+                                .permitAll();
+                    })
                 .build();
         } catch (Exception e) {
             throw new RuntimeException("Error in security configuration. Build failed."+e.getMessage()) ;
