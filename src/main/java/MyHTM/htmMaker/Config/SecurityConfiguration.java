@@ -85,6 +85,9 @@ public class SecurityConfiguration {
                     .formLogin(httpSecurityFormLoginConfigurer -> {
                         httpSecurityFormLoginConfigurer
                                 .successHandler(new AuthenticationSuccessHandler())
+                                .failureHandler(((request, response, exception) ->
+                                        response.setStatus(401))
+                                )
                                 .permitAll();
                     })
                 .build();
