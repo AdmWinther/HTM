@@ -2,7 +2,6 @@ package MyHTM.htmMaker.Model.Identity;
 //
 import MyHTM.htmMaker.Model.Util.Activeable;
 import MyHTM.htmMaker.Model.Util.Email;
-import MyHTM.htmMaker.Model.Identity.Role;
 import jakarta.persistence.*;
 
 //
@@ -18,8 +17,6 @@ public class MyUser extends Activeable {
     private String emailAddress;
     private String password;
     private String role;
-    //use an array of Role objects to store the roles of the user
-
 
     public MyUser(String name, String lastName, String email, String password, String userRole) {
 
@@ -115,13 +112,5 @@ public class MyUser extends Activeable {
 
     public void setID() {
         this.id = ID.generateID();
-    }
-
-    public Role[] getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Role[] roles) {
-        this.roles = roles;
     }
 }
