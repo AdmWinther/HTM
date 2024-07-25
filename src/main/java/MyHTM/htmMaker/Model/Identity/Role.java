@@ -8,17 +8,17 @@ import java.util.UUID;
 
 @Entity
 @Table
-public class Roles {
+public class Role {
     @Id
     private String id;
     private String name;
 
-    public Roles(String name) {
+    public Role(String name) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
     }
 
-    protected Roles() {
+    protected Role() {
     }
 
     public String getId() {
