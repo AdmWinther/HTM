@@ -4,7 +4,12 @@ import MyHTM.htmMaker.Model.Identity.MyUser;
 import MyHTM.htmMaker.Model.Util.UserAPIPostRequest;
 import MyHTM.htmMaker.Service.DataBaseOperationResult;
 import MyHTM.htmMaker.Service.Identity.MyUserService;
+import MyHTM.htmMaker.Utils.Single;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,19 +19,26 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/user")
 public class MyUserController {
-    @Autowired
-    private MyUserService myUserService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-//
 //    @Autowired
-//    public MyUserController(MyUserService myUserService) {
-//        this.myUserService = myUserService;
-//    }
+    private MyUserService myUserService;
+//    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public MyUserController(MyUserService myUserService, PasswordEncoder passwordEncoder) {
+        this.myUserService = myUserService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/test")
     public String test() {
-        return "Hello world from UserController!";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication);
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
+            return userDetails.getUsername();
+        } else {
+                return "Hello to unauthenticated user from UserController!";
+        }
     }
 
     @GetMapping("/generateRandomUser")
@@ -35,16 +47,16 @@ public class MyUserController {
         return myUserService.generateRandomUser();
     }
 
-    @GetMapping("/generateUser")
-    public MyUser generateUser() {
-//        return new AppUser("Christian"+Math.round( Math.random()*10e2), "Perez", "ChrisPrz"+Math.round(Math.random()*10e2)+"@gmail.com", "dfafd");
-        return myUserService.generateUser();
-    }
-
-    @GetMapping("/generateAdmin")
-    public MyUser generateAdmin() {
-//        return new AppUser("Christian"+Math.round( Math.random()*10e2), "Perez", "ChrisPrz"+Math.round(Math.random()*10e2)+"@gmail.com", "dfafd");
-        return myUserService.generateAdmin();
+    @GetMapping("/resetUserTable")
+    public String resetUserTable() {
+        try {
+            myUserService.eraseUserTable();
+            myUserService.generateAdmin();
+            myUserService.generateUser();
+            return "User Table erase successfully!";
+        } catch (Exception e) {
+            return "User Table erase failed!"+e.getMessage();
+        }
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
@@ -52,9 +64,9 @@ public class MyUserController {
     public List<MyUser> getAll() {
         System.out.println("Get all users");
         List<MyUser> myUsers = myUserService.getAll();
-        for (MyUser myUser : myUsers) {
-            System.out.println(myUser.getName()+" "+myUser.getLastName());
-        }
+//        for (MyUser myUser : myUsers) {
+//            System.out.println(myUser.getName()+" "+myUser.getLastName());
+//        }
         return myUsers;
     }
 
@@ -99,6 +111,19 @@ public class MyUserController {
             return myUser;
         } else {
             return null;
+        }
+    }
+
+    @GetMapping("/userType")
+    public Single userType() {
+        System.out.println("User Type is reached.");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
+            MyUser myUser = myUserService.findUserByUsername(userDetails.getUsername()).get();
+            String type = myUser.getRole();
+            return new Single(type);
+        } else {
+            return new Single("Unauthenticated");
         }
     }
 }

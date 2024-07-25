@@ -41,12 +41,8 @@ public class MyUser extends Activeable {
             throw new IllegalArgumentException("User role is required");
         }
         //todo: fetch all the possible roles from the database
-        if(!userRole.equals("Admin")){
-            if(!userRole.equals("User")){
-                if(!userRole.equals("Superuser")){
-                    throw new IllegalArgumentException("User role is not valid");
-                }
-            }
+        if(!userRole.equals("Admin") && !userRole.equals("User")){
+            throw new IllegalArgumentException("User role is not valid");
         }
     }
 

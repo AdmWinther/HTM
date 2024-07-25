@@ -24,7 +24,7 @@ public class Organization extends Activeable {
             this.id = ID.generateID();
             this.name = name;
             this.activate();
-            MyUser superUsers = new MyUser(superUserName, superUserLastName, superUserEmail, this.id, "SuperUser");
+            MyUser superUsers = new MyUser(superUserName, superUserLastName, superUserEmail, this.id, "User");
             this.superUserId= superUsers.getId();
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());

@@ -25,7 +25,7 @@ public class MyUserService {
                 "Perez",
                 "ChrisPrz"+Math.round(Math.random()*10e2)+"@gmail.com",
                 "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
-                "Admin");
+                "User");
         myUserRepository.save(myUser);
         return myUser;
     }
@@ -50,7 +50,7 @@ public class MyUserService {
         //Check if the user already exists by searching for the user email
         Optional<MyUser> existingUser = myUserRepository.findByEmailAddress(user.getEmailAddress());
         if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("The email address is already assinged to another user.");
+            throw new IllegalArgumentException("The email address is already assigned to another user.");
         } else {
             //todo: check if the user OrganizationId exists
             return myUserRepository.save(user);
@@ -76,24 +76,40 @@ public class MyUserService {
     }
 
     public MyUser generateUser() {
-        MyUser myUser = new MyUser(
-                "User",
-                "user",
-                "user@user.com",
-                "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
-                "User");
-        myUserRepository.save(myUser);
-        return myUser;
+        Optional<MyUser> user = myUserRepository.findByEmailAddress("user@user.com");
+        if(user.isPresent()) {
+            throw new IllegalArgumentException("The user already exists");
+        } else {
+            MyUser myUser = new MyUser(
+                    "User",
+                    "user",
+                    "user@user.com",
+                    "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
+                    "User");
+            return myUserRepository.save(myUser);
+        }
     }
 
     public MyUser generateAdmin() {
-        MyUser myUser = new MyUser(
-                "AdminName",
-                "adminLastName",
-                "admin@admin.com",
-                "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
-                "Admin");
-        myUserRepository.save(myUser);
-        return myUser;
+        Optional<MyUser> user = myUserRepository.findByEmailAddress("admin@admin.com");
+        if(user.isPresent()) {
+            throw new IllegalArgumentException("The user already exists");
+        } else {
+            MyUser myUser = new MyUser(
+                    "AdminName",
+                    "adminLastName",
+                    "admin@admin.com",
+                    "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
+                    "Admin");
+            return myUserRepository.save(myUser);
+        }
+    }
+
+    public void eraseUserTable() {
+        try {
+            myUserRepository.deleteAll();
+        } catch (Exception e) {
+            throw new RuntimeException("User table erase failed! "+e.getMessage());
+        }
     }
 }

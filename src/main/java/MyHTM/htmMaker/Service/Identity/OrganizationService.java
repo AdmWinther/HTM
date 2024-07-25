@@ -3,7 +3,7 @@ package MyHTM.htmMaker.Service.Identity;
 import MyHTM.htmMaker.Model.Identity.MyUser;
 import MyHTM.htmMaker.Model.Identity.Organization;
 import MyHTM.htmMaker.Service.DataBaseOperationResult;
-import MyHTM.htmMaker.Service.SuperuserService;
+//import MyHTM.htmMaker.Service.SuperuserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import MyHTM.htmMaker.Repository.Identity.OrganizationRepository;
@@ -14,14 +14,14 @@ import java.util.List;
 public class OrganizationService {
 
     private final MyUserService myUserService;
-    private final SuperuserService superuserService;
+//    private final SuperuserService superuserService;
     OrganizationRepository organizationRepository;
 
     @Autowired
-    public OrganizationService(OrganizationRepository organizationRepository, MyUserService myUserService, SuperuserService superuserService) {
+    public OrganizationService(OrganizationRepository organizationRepository, MyUserService myUserService) {
         this.organizationRepository = organizationRepository;
         this.myUserService = myUserService;
-        this.superuserService = superuserService;
+//        this.superuserService = superuserService;
     }
 
     public Organization generateRandomOrganization() {
@@ -64,7 +64,7 @@ public class OrganizationService {
         } else {
             MyUser registeredUser = myUserService.saveAndReturn(user);
             Organization registeredOrganization = organizationRepository.save(organization);
-            superuserService.save(registeredOrganization, registeredUser);
+            myUserService.save(registeredUser);
             return new DataBaseOperationResult(true, "Organization saved successfully");
         }
     }

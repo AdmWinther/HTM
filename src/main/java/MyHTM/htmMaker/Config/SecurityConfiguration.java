@@ -1,7 +1,8 @@
 package MyHTM.htmMaker.Config;
 
-import MyHTM.htmMaker.AuthenticationSuccessHandler;
+//import MyHTM.htmMaker.AuthenticationSuccessHandler;
 import MyHTM.htmMaker.Service.Identity.MyUserDetailService;
+import MyHTM.htmMaker.Utils.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +31,7 @@ public class SecurityConfiguration {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AppConfig appConfig) {
         try {
             return httpSecurity.authorizeHttpRequests(registry->{
                 //allow all get requests to the endpoint /version
@@ -69,7 +70,7 @@ public class SecurityConfiguration {
                 registry.requestMatchers("/api/role/test").permitAll();
 
                 //The endpoint /api/superuser/newUser is open to superusers
-                registry.requestMatchers("/api/superuser/test").hasRole("Superuser");
+                registry.requestMatchers("/api/superuser/test").hasRole("User");
                 //the endpoint /api/superuser/getAll is open to superusers
                 registry.requestMatchers(HttpMethod.POST, "/root/logger").permitAll();
                 registry.requestMatchers("/root/userDetailServiceTest").permitAll();
@@ -80,17 +81,18 @@ public class SecurityConfiguration {
             }).csrf(csrf->{
                  csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
             }).addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
-                    //allow access to the login page for all users
-//                    .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                    .formLogin(httpSecurityFormLoginConfigurer -> {
-                        httpSecurityFormLoginConfigurer
-                                .successHandler(new AuthenticationSuccessHandler())
-                                .failureHandler(((request, response, exception) ->
-                                        response.setStatus(401))
-                                )
-                                .permitAll();
+            .formLogin(httpSecurityFormLoginConfigurer -> {
+                httpSecurityFormLoginConfigurer
+                    .successHandler((request, response, authentication) -> {
+                        response.setStatus(200);
+                        response.setHeader("Location", "dashboard");
                     })
-                .build();
+                    .failureHandler(((request, response, exception) ->
+                            response.setStatus(401))
+                    )
+                    .permitAll();
+            })
+            .build();
         } catch (Exception e) {
             throw new RuntimeException("Error in security configuration. Build failed."+e.getMessage()) ;
         }
