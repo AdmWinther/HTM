@@ -91,7 +91,14 @@ public class SecurityConfiguration {
                             response.setStatus(401))
                     )
                     .permitAll();
-            })
+            }).logout(httpSecurityLogoutConfigurer -> {
+                System.out.println("Logout is called.");
+                httpSecurityLogoutConfigurer
+                    .logoutSuccessHandler((request, response, authentication) -> {
+                        response.setStatus(200);
+                        response.setHeader("Location", "logout");
+                    }).permitAll();
+                })
             .build();
         } catch (Exception e) {
             throw new RuntimeException("Error in security configuration. Build failed."+e.getMessage()) ;
