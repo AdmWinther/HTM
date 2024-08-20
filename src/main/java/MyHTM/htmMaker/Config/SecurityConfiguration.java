@@ -51,7 +51,7 @@ public class SecurityConfiguration {
 //                registry.requestMatchers("/version").permitAll();
 
 
-                //The endpoint /api/organization/newOrganization is open to ADMIN users
+                //The endpoint  /api/organization/newOrganization is open to ADMIN users
                 registry.requestMatchers("/api/organization/newOrganization").permitAll();
 
 
