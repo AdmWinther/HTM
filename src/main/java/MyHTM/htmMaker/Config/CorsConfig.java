@@ -15,7 +15,7 @@ public class CorsConfig {
         return new CorsFilter(source);
     }
 
-    private CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedMethod("*");
