@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
@@ -37,7 +38,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AppConfig appConfig) {
         try {
-            return httpSecurity.authorizeHttpRequests(registry->{
+            httpSecurity.authorizeHttpRequests(registry->{
                 //allow all get requests to the endpoint /version
                 registry.requestMatchers("/version").permitAll();
                 //allow all post requests to the endpoint /version
@@ -102,8 +103,11 @@ public class SecurityConfiguration {
                         response.setStatus(200);
                         response.setHeader("Location", "logout");
                     }).permitAll();
-                })
-            .build();
+            }).httpBasic(Customizer.withDefaults());
+
+            httpSecurity.cors(Customizer.withDefaults());
+
+            return httpSecurity.build();
         } catch (Exception e) {
             throw new RuntimeException("Error in security configuration. Build failed."+e.getMessage()) ;
         }
