@@ -5,9 +5,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import MyHTM.htmMaker.Utils.AppConfig;
 
 @Configuration
 public class CorsConfig {
+
+    private final AppConfig appConfig;
+
+    public CorsConfig(AppConfig appConfig) {
+        this.appConfig = appConfig;
+    }
 
     @Bean
     public CorsFilter corsFilter() {
@@ -17,7 +24,7 @@ public class CorsConfig {
 
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("https://localhost:3000");
+        configuration.addAllowedOrigin(appConfig.getDomain());
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);

@@ -1,0 +1,26 @@
+spring.application.name=htmMakerApp
+app.name = htmMakerApp
+app.version = 1.0.0.8
+app.domain = http://localhost:3000
+app.roles = ["Admin", "User"]
+
+######Postgres Database Configuration
+#spring.datasource.url= jdbc:postgresql://server.amazonaws.com:5432/database
+#spring.datasource.username=username
+#spring.datasource.password=password
+#spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.show-sql=true
+#spring.jpa.properties.hibernate.format_sql=true
+#
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+######SQlite database configuration
+spring.datasource.url= jdbc:sqlite:database_file_name.db
+spring.datasource.driver-class-name=org.sqlite.JDBC
+spring.datasource.username=
+spring.datasource.password=
+spring.jpa.database-platform=org.hibernate.community.dialect.SQLiteDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+

@@ -1,6 +1,7 @@
 package MyHTM.htmMaker.Service.Identity;
 
 import MyHTM.htmMaker.Model.Identity.UserRole;
+import MyHTM.htmMaker.Model.Util.Role;
 import MyHTM.htmMaker.Repository.Identity.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class UserRoleService {
     }
 
     public UserRole save() {
-        UserRole userRole = new UserRole("test2", "ADMIN");
+        UserRole userRole = new UserRole("test2", Role.Admin);
         return this.userRoleRepository.save(userRole);
     }
 }
