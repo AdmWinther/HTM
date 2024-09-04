@@ -132,8 +132,8 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public CookieSameSiteSupplier applicationCookieSameSiteSupplier() {
-//        return CookieSameSiteSupplier.ofNone();
-//    }
+    @Bean
+    public CookieSameSiteSupplier applicationCookieSameSiteSupplier() {
+        return CookieSameSiteSupplier.ofNone();
+    }
 }
