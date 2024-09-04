@@ -2,6 +2,8 @@ package MyHTM.htmMaker.Model.Identity;
 //
 import MyHTM.htmMaker.Model.Util.Activeable;
 import MyHTM.htmMaker.Model.Util.Email;
+import MyHTM.htmMaker.Model.Util.Role;
+import MyHTM.htmMaker.Utils.AppConfig;
 import jakarta.persistence.*;
 
 //
@@ -18,33 +20,32 @@ public class MyUser extends Activeable {
     private String password;
     private String role;
 
-    public MyUser(String name, String lastName, String email, String password, String userRole) {
+    public MyUser(String name, String lastName, String email, String password, String role) {
 
         try {
-            isValidNewUser(name, lastName, email);
+            isValidNewUser(name, lastName, email, role);
             this.id = ID.generateID();
             this.name = name;
             this.lastName = lastName;
             this.emailAddress = email;
             isValidPassword(password);
             this.password = password;
-            isUserRoleValid(userRole);
-            this.role = userRole;
+            this.role = role;
             this.activate();
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
 
-    private void isUserRoleValid(String userRole) {
-        if(userRole == null || userRole.isEmpty()) {
-            throw new IllegalArgumentException("User role is required");
-        }
-        //todo: fetch all the possible roles from the database
-        if(!userRole.equals("Admin") && !userRole.equals("User")){
-            throw new IllegalArgumentException("User role is not valid");
-        }
-    }
+//    private void isUserRoleValid(String userRole) {
+//        if(userRole == null || userRole.isEmpty()) {
+//            throw new IllegalArgumentException("User role is required");
+//        }
+//        //todo: fetch all the possible roles from the database
+//        if(!userRole.equals("Admin") && !userRole.equals("User")){
+//            throw new IllegalArgumentException("User role is not valid");
+//        }
+//    }
 
     private void isValidPassword(String password) {
         if(password == null || password.isEmpty()) {
@@ -56,7 +57,7 @@ public class MyUser extends Activeable {
     protected MyUser() {
     }
 
-    public static void isValidNewUser(String name, String lastName, String emailAddress) throws IllegalArgumentException{
+    public static void isValidNewUser(String name, String lastName, String emailAddress, String userRole) throws IllegalArgumentException{
         if(name == null || name.isEmpty()) {
             throw new IllegalArgumentException("User name is required");
         }
@@ -72,6 +73,16 @@ public class MyUser extends Activeable {
         if(!Email.isEmail(emailAddress)) {
             throw new IllegalArgumentException("User email address is not correct");
         }
+
+        if (userRole == null || userRole.isEmpty()) {
+            throw new IllegalArgumentException("User role is required");
+        } else {
+            AppConfig appConfig = new AppConfig();
+            if(!appConfig.getRoles().contains(userRole)) {
+                throw new IllegalArgumentException("User role is not valid");
+            }
+        }
+
     }
 
     public String getId() {

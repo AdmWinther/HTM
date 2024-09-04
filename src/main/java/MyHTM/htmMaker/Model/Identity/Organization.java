@@ -17,10 +17,10 @@ public class Organization extends Activeable {
     private String superUserId;
     //todo; in the future, we will have a list of super users
 
-    public Organization(String name, String superUserName, String superUserLastName, String superUserEmail) {
+    public Organization(String name, String superUserName, String superUserLastName, String superUserEmail, String userRole) {
         try {
             isValidNewCompanyName(name);
-            MyUser.isValidNewUser(superUserName, superUserLastName, superUserEmail);
+            MyUser.isValidNewUser(superUserName, superUserLastName, superUserEmail, userRole);
             this.id = ID.generateID();
             this.name = name;
             this.activate();

@@ -1,5 +1,6 @@
 package MyHTM.htmMaker.Model.Identity;
 
+import MyHTM.htmMaker.Model.Util.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -13,12 +14,13 @@ public class UserRole {
     @Id
     private String id;
     private String userId;
-    private String roleId;
+    private String projectId;
+    private Role role;
 
-    public UserRole(String UserId, String RoleId) {
+    public UserRole(String UserId, Role role) {
         this.id = ID.generateID();
         this.userId = UserId;
-        this.roleId = RoleId;
+        this.role = role;
     }
 
     protected UserRole() {
@@ -36,11 +38,11 @@ public class UserRole {
         this.userId = userId;
     }
 
-    public String getRoleId() {
-        return roleId;
+    public Role getRoleId() {
+        return role;
     }
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
+    public void setRoleId(Role newRole) {
+        this.role = newRole;
     }
 }
