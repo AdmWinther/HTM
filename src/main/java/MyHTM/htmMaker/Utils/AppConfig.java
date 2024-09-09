@@ -41,6 +41,7 @@ public class AppConfig {
     }
 
     public List<String> getRoles() {
+        //Todo: GetRoles returns null. It must be fixed.
         return roles;
     }
 }

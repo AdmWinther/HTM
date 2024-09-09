@@ -4,7 +4,6 @@ public class OrganizationAPIPostRequest {
     private final String organization_name;
     private final String superuser_name;
     private final String superuser_lastname;
-    private final String superuser_username;
     private final String superuser_email;
     private final String superuser_password;
 
@@ -12,7 +11,6 @@ public class OrganizationAPIPostRequest {
     public OrganizationAPIPostRequest(
             String organization_name,
             String superuser_name,
-            String superuser_username,
             String superuser_lastname,
             String superuser_email,
             String superuser_password
@@ -21,7 +19,6 @@ public class OrganizationAPIPostRequest {
         this.organization_name = organization_name;
         this.superuser_name = superuser_name;
         this.superuser_lastname = superuser_lastname;
-        this.superuser_username = superuser_username;
         this.superuser_email = superuser_email;
         this.superuser_password = superuser_password;
     }
@@ -46,7 +43,4 @@ public class OrganizationAPIPostRequest {
         return superuser_password;
     }
 
-    public String getSupreuserUsername() {
-        return superuser_username;
-    }
 }
