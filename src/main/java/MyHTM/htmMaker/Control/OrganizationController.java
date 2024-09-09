@@ -44,8 +44,7 @@ public class OrganizationController {
         return organizationService.getAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
-    @PostMapping("/newOrganization")
+    @PostMapping("/new")
     public DataBaseOperationResult newOrganization(@RequestBody OrganizationAPIPostRequest organizationRequest) {
 
         System.out.println("new Organization started!");

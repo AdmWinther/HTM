@@ -63,6 +63,7 @@ public class OrganizationService {
             throw new RuntimeException("Either a user is already registered with this email address or the email address in not in the right format.");
         } else {
             MyUser registeredUser = myUserService.saveAndReturn(user);
+            organization.setSuperUserId(registeredUser.getId());
             Organization registeredOrganization = organizationRepository.save(organization);
             myUserService.save(registeredUser);
             return new DataBaseOperationResult(true, "Organization saved successfully");

@@ -78,9 +78,10 @@ public class MyUser extends Activeable {
             throw new IllegalArgumentException("User role is required");
         } else {
             AppConfig appConfig = new AppConfig();
-            if(!appConfig.getRoles().contains(userRole)) {
-                throw new IllegalArgumentException("User role is not valid");
-            }
+            //ToDo: Because the method GetRoles is not working, this control is off. Fix GetRoles and turn this control on again.
+//            if(!appConfig.getRoles().contains(userRole)) {
+//                throw new IllegalArgumentException("User role is not valid");
+//            }
         }
 
     }
