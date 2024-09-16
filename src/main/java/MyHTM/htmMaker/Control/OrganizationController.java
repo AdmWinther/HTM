@@ -7,6 +7,7 @@ import MyHTM.htmMaker.Service.DataBaseOperationResult;
 import MyHTM.htmMaker.Service.Identity.OrganizationService;
 import MyHTM.htmMaker.Service.Identity.MyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,15 +17,18 @@ import java.util.List;
 public class OrganizationController {
     private final OrganizationService organizationService;
     private final MyUserService myUserService;
+    private PasswordEncoder passwordEncoder;
 
 
     @Autowired
     public OrganizationController(
             OrganizationService organizationService,
-            MyUserService myUserService)
+            MyUserService myUserService,
+            PasswordEncoder passwordEncoder)
     {
         this.organizationService = organizationService;
         this.myUserService = myUserService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/test")
@@ -54,7 +58,7 @@ public class OrganizationController {
             organizationRequest.getSuperuserName(),
             organizationRequest.getSuperuserLastname(),
             organizationRequest.getSuperuserEmailAddress(),
-            organizationRequest.getSuperuserPassword(),
+            passwordEncoder.encode(organizationRequest.getSuperuserPassword()),
             "User");
 
         Organization organization = new Organization(organizationRequest.getOrganizationName());
