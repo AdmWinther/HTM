@@ -34,7 +34,8 @@ public class MyUserService {
         return myUserRepository.findAll();
     }
 
-    public DataBaseOperationResult save(MyUser user) {
+    public DataBaseOperationResult
+    save(MyUser user) {
         //Check if the user already exists by searching for the user email
         Optional<MyUser> existingUser = myUserRepository.findByEmailAddress(user.getEmailAddress());
         if (existingUser.isPresent()) {
@@ -85,7 +86,7 @@ public class MyUserService {
                     "user",
                     "user@user.com",
                     "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
-                    "User");
+                    "USER");
             return myUserRepository.save(myUser);
         }
     }
@@ -100,7 +101,7 @@ public class MyUserService {
                     "adminLastName",
                     "admin@admin.com",
                     "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
-                    "Admin");
+                    "ADMIN");
             return myUserRepository.save(myUser);
         }
     }

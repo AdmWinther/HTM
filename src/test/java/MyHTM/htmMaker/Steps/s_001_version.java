@@ -28,7 +28,9 @@ public class s_001_version {
 
     @Given("the server is running")
     public void theServerIsRunning() {
-        System.out.println("Server is running");
+
+        //start the spring boot server
+        HtmMakerAppApplication.main(new String[]{});
     }
 
     @When("the client calls {string}")

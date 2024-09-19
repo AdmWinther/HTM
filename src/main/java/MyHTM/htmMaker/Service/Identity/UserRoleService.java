@@ -27,7 +27,7 @@ public class UserRoleService {
     }
 
     public UserRole save() {
-        UserRole userRole = new UserRole("test2", Role.Admin);
+        UserRole userRole = new UserRole("test2", Role.ADMIN);
         return this.userRoleRepository.save(userRole);
     }
 }
