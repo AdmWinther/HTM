@@ -4,6 +4,7 @@ import MyHTM.htmMaker.Model.Identity.MyUser;
 import MyHTM.htmMaker.Model.Util.UserAPIPostRequest;
 import MyHTM.htmMaker.Service.DataBaseOperationResult;
 import MyHTM.htmMaker.Service.Identity.MyUserService;
+import MyHTM.htmMaker.Utils.AppConfig;
 import MyHTM.htmMaker.Utils.Single;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,17 +74,26 @@ public class MyUserController {
     //allow cross-origin requests
     @CrossOrigin("http://localhost:5173/")
     @PostMapping(value = "/newUser", produces = "application/json", consumes = "application/json")
-    public DataBaseOperationResult newUser(@RequestBody MyUser myUser) {
-        System.out.println("the endpoint is reached.");
-        myUser.setPassword(passwordEncoder.encode(myUser.getPassword()));
-        myUser.setID();
-        System.out.println(myUser.getId());
-        System.out.println(myUser.getName());
-        System.out.println(myUser.getLastName());
-        System.out.println(myUser.getEmailAddress());
-        System.out.println(myUser.getPassword());
-        System.out.println(myUser.getRole());
-        return myUserService.save(myUser);
+    public DataBaseOperationResult newUser(@RequestBody UserAPIPostRequest userAPIPostRequest) {
+        if(AppConfig.getInstance().isVerbose()) {
+            System.out.println("the endpoint API/user/newUser is reached.");
+            System.out.println(userAPIPostRequest.getName());
+            System.out.println(userAPIPostRequest.getLastname());
+            System.out.println(userAPIPostRequest.getEmailAddress());
+            System.out.println(userAPIPostRequest.getPassword());
+            System.out.println(userAPIPostRequest.getRole());
+        }
+        try{
+            MyUser myUser = new MyUser(
+                    userAPIPostRequest.getName(),
+                    userAPIPostRequest.getLastname(),
+                    userAPIPostRequest.getEmailAddress(),
+                    passwordEncoder.encode(userAPIPostRequest.getPassword()),
+                    userAPIPostRequest.getRole());
+            return myUserService.save(myUser);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
 //    @CrossOrigin("http://localhost:5173")
@@ -125,5 +135,10 @@ public class MyUserController {
         } else {
             return new Single("Unauthenticated");
         }
+    }
+
+    @GetMapping("/listOfRoles")
+    public List<String> listOfRoles() {
+        return AppConfig.getInstance().getRoles();
     }
 }

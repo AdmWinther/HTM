@@ -1,9 +1,9 @@
 package MyHTM.htmMaker.Model.Util;
 
 public enum Role {
-    Admin,
+    ADMIN,
     ViceAdmin,
-    User,
+    USER,
     ProjectManager,
     SuperUser,
     Reader,

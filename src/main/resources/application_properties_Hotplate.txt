@@ -2,7 +2,7 @@ spring.application.name=htmMakerApp
 app.name = htmMakerApp
 app.version = 1.0.0.8
 app.domain = http://localhost:3000
-app.roles = ["Admin", "User"]
+app.roles = ["ADMIN", "USER"]
 
 ######Postgres Database Configuration
 #spring.datasource.url= jdbc:postgresql://server.amazonaws.com:5432/database

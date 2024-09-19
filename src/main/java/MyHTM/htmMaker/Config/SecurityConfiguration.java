@@ -51,6 +51,7 @@ public class SecurityConfiguration {
                 registry.requestMatchers("/api/user/test").permitAll();
                 registry.requestMatchers("api/user/getUserByEmail").permitAll();
                 registry.requestMatchers("api/user/getUserByUsername").permitAll();
+                registry.requestMatchers("api/user/listOfRoles").hasRole("ADMIN");
 
                 //the endpoint for making a new user is open to all
                 registry.requestMatchers(HttpMethod.POST,"/api/user/newUser").permitAll();
@@ -58,17 +59,17 @@ public class SecurityConfiguration {
 
 
                 //The endpoint  /api/organization/newOrganization is open to ADMIN users
-                registry.requestMatchers("/api/organization/new").hasRole("Admin");
+                registry.requestMatchers("/api/organization/new").hasRole("ADMIN");
 
 
                 //The endpoint /api/organization/test is open to all users
                 registry.requestMatchers("/api/organization/test").permitAll();
                 //The endpoint /api/*/getAll is open to normal users
-                registry.requestMatchers("/api/organization/getAll").hasRole("User");
+                registry.requestMatchers("/api/organization/getAll").hasRole("USER");
                 //The endpoint /api/organization/generateRandomOrganization is open to all users
-                registry.requestMatchers("/api/organization/generateRandomOrganization").hasRole("Admin");
+                registry.requestMatchers("/api/organization/generateRandomOrganization").hasRole("ADMIN");
 
-                registry.requestMatchers("/api/user/getAll").hasRole("User");
+                registry.requestMatchers("/api/user/getAll").hasRole("USER");
                 registry.requestMatchers("/api/user/generateRandomUser").permitAll();
                 registry.requestMatchers("/api/user/generateUser").permitAll();
                 registry.requestMatchers("/api/user/generateAdmin").permitAll();
@@ -76,7 +77,7 @@ public class SecurityConfiguration {
                 registry.requestMatchers("/api/role/test").permitAll();
 
                 //The endpoint /api/superuser/newUser is open to superusers
-                registry.requestMatchers("/api/superuser/test").hasRole("User");
+                registry.requestMatchers("/api/superuser/test").hasRole("USER");
                 //the endpoint /api/superuser/getAll is open to superusers
                 registry.requestMatchers(HttpMethod.POST, "/root/logger").permitAll();
                 registry.requestMatchers("/root/userDetailServiceTest").permitAll();
