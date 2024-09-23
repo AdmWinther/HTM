@@ -91,21 +91,6 @@ public class MyUserService {
         }
     }
 
-    public MyUser generateAdmin() {
-        Optional<MyUser> user = myUserRepository.findByEmailAddress("admin@admin.com");
-        if(user.isPresent()) {
-            throw new IllegalArgumentException("The user already exists");
-        } else {
-            MyUser myUser = new MyUser(
-                    "AdminName",
-                    "adminLastName",
-                    "admin@admin.com",
-                    "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
-                    "ADMIN");
-            return myUserRepository.save(myUser);
-        }
-    }
-
     public void eraseUserTable() {
         try {
             myUserRepository.deleteAll();

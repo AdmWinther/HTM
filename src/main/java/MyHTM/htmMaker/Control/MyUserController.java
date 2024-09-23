@@ -52,8 +52,22 @@ public class MyUserController {
     public String resetUserTable() {
         try {
             myUserService.eraseUserTable();
-            myUserService.generateAdmin();
-            myUserService.generateUser();
+            MyUser Admin = new MyUser(
+                    "AdminName",
+                    "adminLastName",
+                    "admin@admin.com",
+                    "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
+                    "ADMIN");
+            myUserService.save(Admin);
+
+            MyUser User = new MyUser(
+                    "User",
+                    "user",
+                    "user@user.com",
+                    "$2a$12$epLoy.JlekCaSGhQLa3bVucC41s7273OqSxWzGRJO4STVwJC.AkTq",
+                    "USER");
+            myUserService.save(User);
+
             return "User Table erase successfully!";
         } catch (Exception e) {
             return "User Table erase failed!"+e.getMessage();
